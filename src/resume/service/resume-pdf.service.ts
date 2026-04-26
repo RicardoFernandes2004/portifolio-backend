@@ -185,22 +185,67 @@ export class ResumePdfService implements ResumePdfPort {
                 widths: ['*', 120],
                 body: items.map((item) => [
                     { text: item.name, margin: [0, 2, 0, 2] },
-                    {
-                        text: this.renderLevelBar(item.level),
-                        margin: [0, 2, 0, 2],
-                        color: '#444444',
-                    },
+                    this.renderLevelBar(item.level),
                 ]),
             },
             layout: 'noBorders',
         };
     }
 
-    private renderLevelBar(level: number): string {
+    private renderLevelBar(level: number): Content {
         const max = 5;
         const filled = Math.max(0, Math.min(max, Math.round(level)));
-        const empty = max - filled;
-        return '█'.repeat(filled) + '░'.repeat(empty) + `  ${level}/${max}`;
+        const totalWidth = 80;
+        const barHeight = 6;
+        const segmentWidth = totalWidth / max;
+        const filledWidth = filled * segmentWidth;
+        const emptyWidth = totalWidth - filledWidth;
+
+        const canvasShapes: Array<{
+            type: 'rect';
+            x: number;
+            y: number;
+            w: number;
+            h: number;
+            color: string;
+        }> = [];
+        if (filledWidth > 0) {
+            canvasShapes.push({
+                type: 'rect',
+                x: 0,
+                y: 0,
+                w: filledWidth,
+                h: barHeight,
+                color: '#444444',
+            });
+        }
+        if (emptyWidth > 0) {
+            canvasShapes.push({
+                type: 'rect',
+                x: filledWidth,
+                y: 0,
+                w: emptyWidth,
+                h: barHeight,
+                color: '#dddddd',
+            });
+        }
+
+        return {
+            margin: [0, 6, 0, 2],
+            columns: [
+                {
+                    width: totalWidth,
+                    canvas: canvasShapes,
+                },
+                {
+                    width: 'auto',
+                    text: `${level}/${max}`,
+                    color: '#444444',
+                    margin: [6, -2, 0, 0],
+                    fontSize: 9,
+                },
+            ],
+        };
     }
 
     private formatPeriod(start: Date, end: Date | null): string {
