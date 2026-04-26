@@ -1,26 +1,51 @@
-import { User } from "src/generated/prisma/client";
+import { Injectable } from "@nestjs/common";
+import type { User } from "src/generated/prisma/client";
+import type {
+    PersistUserData,
+    UserRepositoryPort,
+} from "src/users/service/dtos/user.ports";
 import { PrismaService } from "../../../../prisma/prisma.service";
 
-export class UserRepository{
+@Injectable()
+export class UserRepository implements UserRepositoryPort {
+    constructor(private readonly prisma: PrismaService) {}
 
-    constructor(private readonly prisma: PrismaService) {
-        this.prisma = prisma;
+    async findByEmailOrUsername(
+        email?: string,
+        username?: string,
+    ): Promise<User | null> {
+        const or: Array<{ email?: string; username?: string }> = [];
+        if (email) or.push({ email });
+        if (username) or.push({ username });
+        if (or.length === 0) return null;
+
+        return this.prisma.user.findFirst({ where: { OR: or } });
     }
 
-    async findByEmailOrUsername(email: string, username: string): Promise<User | null> {
-        return await this.prisma.user.findFirst({
-            where: {
-                OR: [
-                    { email },
-                    { username },
-                ],
+    async findById(id: number): Promise<User | null> {
+        return this.prisma.user.findUnique({ where: { id } });
+    }
+
+    async create(data: PersistUserData): Promise<User> {
+        return this.prisma.user.create({
+            data: {
+                username: data.username,
+                email: data.email,
+                password: data.password,
+                jwtToken: data.jwtToken,
+                jwtTokenExpiresAt: data.jwtTokenExpiresAt,
             },
         });
     }
 
-    async create(user: User): Promise<User> {
-        return await this.prisma.user.create({
-            data: user,
+    async updateToken(
+        id: number,
+        jwtToken: string,
+        jwtTokenExpiresAt: Date,
+    ): Promise<User> {
+        return this.prisma.user.update({
+            where: { id },
+            data: { jwtToken, jwtTokenExpiresAt },
         });
     }
 }
