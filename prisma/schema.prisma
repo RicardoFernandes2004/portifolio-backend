@@ -1,0 +1,130 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                Int      @id @default(autoincrement())
+  username          String   @unique
+  email             String   @unique
+  password          String
+  jwtToken          String   @unique
+  jwtTokenExpiresAt DateTime
+  jwtTokenCreatedAt DateTime @default(now())
+  jwtTokenUpdatedAt DateTime @updatedAt
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique
+  title      String
+  content    String
+  images     String[]
+  categoryId Int
+  publishedAt DateTime?
+  category   Category @relation(fields: [categoryId], references: [id])
+  summary    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
+
+model ResumeHeader {
+  id        Int      @id @default(autoincrement())
+  name      String
+  jobTitle  String
+  summary   String
+  location  String
+  email     String
+  phone     String
+  website   String
+  linkedin  String
+  github    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id            Int      @id @default(autoincrement())
+  title         String
+  description   String
+  images        String[]
+  technologies  String[]
+  link          String?
+  githubLink    String?
+  youtubeLink   String?
+  instagramLink String?
+  twitterLink   String?
+  facebookLink  String?
+  collaborators String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Skill {
+  id          Int      @id @default(autoincrement())
+  name        String
+  level       Int
+  description String?
+  icon        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Experience {
+  id          Int       @id @default(autoincrement())
+  company     String
+  position    String
+  description String
+  startDate   DateTime
+  endDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Education {
+  id           Int       @id @default(autoincrement())
+  school       String
+  degree       String
+  fieldOfStudy String
+  startDate    DateTime
+  endDate      DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Language {
+  id        Int      @id @default(autoincrement())
+  name      String
+  level     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
