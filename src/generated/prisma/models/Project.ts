@@ -548,10 +548,6 @@ export type ProjectUpdatetechnologiesInput = {
   push?: string | string[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type ProjectUpdatecollaboratorsInput = {
   set?: string[]
   push?: string | string[]

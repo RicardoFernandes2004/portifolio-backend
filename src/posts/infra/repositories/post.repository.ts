@@ -8,6 +8,17 @@ import type {
 } from 'src/posts/service/dtos/post.ports';
 import { PrismaService } from '../../../../prisma/prisma.service';
 
+const POST_INCLUDE = {
+    category: true,
+    _count: {
+        select: {
+            comments: { where: { status: 'PUBLISHED' as const } },
+            likes: true,
+            views: true,
+        },
+    },
+} as const;
+
 @Injectable()
 export class PostRepository implements PostRepositoryPort {
     constructor(private readonly prisma: PrismaService) {}
@@ -23,7 +34,7 @@ export class PostRepository implements PostRepositoryPort {
                 }),
             },
             orderBy: [{ publishedAt: 'desc' }, { id: 'desc' }],
-            include: { category: true },
+            include: POST_INCLUDE,
         });
     }
 
@@ -37,28 +48,28 @@ export class PostRepository implements PostRepositoryPort {
                 }),
             },
             orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
-            include: { category: true },
+            include: POST_INCLUDE,
         });
     }
 
     async findById(id: number): Promise<PrismaPostWithCategory | null> {
         return this.prisma.post.findUnique({
             where: { id },
-            include: { category: true },
+            include: POST_INCLUDE,
         });
     }
 
     async findBySlug(slug: string): Promise<PrismaPostWithCategory | null> {
         return this.prisma.post.findUnique({
             where: { slug },
-            include: { category: true },
+            include: POST_INCLUDE,
         });
     }
 
     async create(data: PersistPostData): Promise<PrismaPostWithCategory> {
         return this.prisma.post.create({
             data,
-            include: { category: true },
+            include: POST_INCLUDE,
         });
     }
 
@@ -69,7 +80,7 @@ export class PostRepository implements PostRepositoryPort {
         return this.prisma.post.update({
             where: { id },
             data,
-            include: { category: true },
+            include: POST_INCLUDE,
         });
     }
 

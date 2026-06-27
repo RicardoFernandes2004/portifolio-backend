@@ -44,6 +44,7 @@ export async function createNestApp(): Promise<{
     expressApp: express.Express;
 }> {
     const expressApp = express();
+    expressApp.set('trust proxy', 1);
     const adapter = new ExpressAdapter(expressApp);
     const app = await NestFactory.create(AppModule, adapter);
     await configureApp(app);

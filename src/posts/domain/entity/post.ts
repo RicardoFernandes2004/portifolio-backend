@@ -5,17 +5,32 @@ import type {
 import { Category } from 'src/categories/domain/entity/category';
 import { PostResponseDto } from 'src/posts/service/dtos/post.dto';
 
-export type PrismaPostWithCategory = PrismaPost & { category?: PrismaCategory };
+export type PostEngagementCounts = {
+    comments: number;
+    likes: number;
+    views: number;
+};
+
+export type PrismaPostWithCategory = PrismaPost & {
+    category?: PrismaCategory;
+    _count?: PostEngagementCounts;
+};
 
 export class Post {
     private constructor(
         private readonly props: PrismaPost,
         private readonly _category: Category | null,
+        private readonly _counts: PostEngagementCounts,
     ) {}
 
     static fromPrisma(row: PrismaPostWithCategory): Post {
         const category = row.category ? Category.fromPrisma(row.category) : null;
-        return new Post(row, category);
+        const counts: PostEngagementCounts = {
+            comments: row._count?.comments ?? 0,
+            likes: row._count?.likes ?? 0,
+            views: row._count?.views ?? 0,
+        };
+        return new Post(row, category, counts);
     }
 
     get id(): number {
@@ -67,6 +82,18 @@ export class Post {
         return at !== null && at.getTime() <= Date.now();
     }
 
+    get commentCount(): number {
+        return this._counts.comments;
+    }
+
+    get likeCount(): number {
+        return this._counts.likes;
+    }
+
+    get viewCount(): number {
+        return this._counts.views;
+    }
+
     toResponseDto(): PostResponseDto {
         const dto = new PostResponseDto();
         dto.id = this.id;
@@ -79,6 +106,9 @@ export class Post {
         dto.category = this._category ? this._category.toResponseDto() : null;
         dto.publishedAt = this.publishedAt;
         dto.isPublished = this.isPublished;
+        dto.commentCount = this.commentCount;
+        dto.likeCount = this.likeCount;
+        dto.viewCount = this.viewCount;
         dto.createdAt = this.createdAt;
         dto.updatedAt = this.updatedAt;
         return dto;

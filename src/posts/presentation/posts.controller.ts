@@ -10,8 +10,10 @@ import {
     Post,
     Put,
     Query,
+    Req,
     UseGuards,
 } from '@nestjs/common';
+import type { Request } from 'express';
 import {
     ApiBadRequestResponse,
     ApiBearerAuth,
@@ -27,18 +29,27 @@ import {
     ApiTags,
     ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Throttle, ThrottlerGuard } from '@nestjs/throttler';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import {
+    LikeResponseDto,
+    ViewResponseDto,
+} from 'src/posts/service/dtos/engagement.dto';
 import {
     CreatePostDto,
     PostResponseDto,
     UpdatePostDto,
 } from 'src/posts/service/dtos/post.dto';
+import { EngagementService } from 'src/posts/service/engagement.service';
 import { PostsService } from 'src/posts/service/posts.service';
 
 @ApiTags('posts')
 @Controller('posts')
 export class PostsController {
-    constructor(private readonly postsService: PostsService) {}
+    constructor(
+        private readonly postsService: PostsService,
+        private readonly engagementService: EngagementService,
+    ) {}
 
     @Get()
     @ApiOperation({
@@ -191,6 +202,54 @@ export class PostsController {
     @ApiNotFoundResponse({ description: 'Post não encontrado' })
     async delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
         await this.postsService.delete(id);
+    }
+
+    @Post(':id/like')
+    @UseGuards(ThrottlerGuard)
+    @Throttle({ default: { limit: 10, ttl: 60_000 } })
+    @ApiOperation({
+        summary: 'Curtir post (público) - idempotente por IP',
+    })
+    @ApiParam({ name: 'id', type: Number, example: 1 })
+    @ApiOkResponse({ type: LikeResponseDto })
+    @ApiNotFoundResponse({ description: 'Post não encontrado' })
+    async like(
+        @Param('id', ParseIntPipe) id: number,
+        @Req() req: Request,
+    ): Promise<LikeResponseDto> {
+        return this.engagementService.like(id, req.ip);
+    }
+
+    @Delete(':id/like')
+    @UseGuards(ThrottlerGuard)
+    @Throttle({ default: { limit: 10, ttl: 60_000 } })
+    @ApiOperation({
+        summary: 'Descurtir post (público) - remove o like do IP',
+    })
+    @ApiParam({ name: 'id', type: Number, example: 1 })
+    @ApiOkResponse({ type: LikeResponseDto })
+    @ApiNotFoundResponse({ description: 'Post não encontrado' })
+    async unlike(
+        @Param('id', ParseIntPipe) id: number,
+        @Req() req: Request,
+    ): Promise<LikeResponseDto> {
+        return this.engagementService.unlike(id, req.ip);
+    }
+
+    @Post(':id/view')
+    @UseGuards(ThrottlerGuard)
+    @Throttle({ default: { limit: 20, ttl: 60_000 } })
+    @ApiOperation({
+        summary: 'Registrar visualização do post (público) - única por IP',
+    })
+    @ApiParam({ name: 'id', type: Number, example: 1 })
+    @ApiOkResponse({ type: ViewResponseDto })
+    @ApiNotFoundResponse({ description: 'Post não encontrado' })
+    async view(
+        @Param('id', ParseIntPipe) id: number,
+        @Req() req: Request,
+    ): Promise<ViewResponseDto> {
+        return this.engagementService.registerView(id, req.ip);
     }
 
     private parseCategoryFilter(

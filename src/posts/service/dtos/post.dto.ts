@@ -122,6 +122,21 @@ export class PostResponseDto {
     })
     isPublished!: boolean;
 
+    @ApiProperty({
+        example: 3,
+        description: 'Total de comentários publicados',
+    })
+    commentCount!: number;
+
+    @ApiProperty({ example: 42, description: 'Total de likes (únicos por IP)' })
+    likeCount!: number;
+
+    @ApiProperty({
+        example: 1234,
+        description: 'Total de views (únicas por IP)',
+    })
+    viewCount!: number;
+
     @ApiProperty({ example: '2026-04-26T18:30:00.000Z' })
     createdAt!: Date;
 

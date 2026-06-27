@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { EducationsModule } from './educations/educations.module';
@@ -12,6 +13,9 @@ import { UsersModule } from './users/users.module';
 
 @Module({
     imports: [
+        ThrottlerModule.forRoot([
+            { name: 'default', ttl: 60_000, limit: 30 },
+        ]),
         AuthModule,
         UsersModule,
         ExperiencesModule,

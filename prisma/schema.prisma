@@ -36,8 +36,56 @@ model Post {
   publishedAt DateTime?
   category   Category @relation(fields: [categoryId], references: [id])
   summary    String
+  comments   Comment[]
+  likes      PostLike[]
+  views      PostView[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+enum CommentStatus {
+  PUBLISHED
+  PENDING
+}
+
+model Comment {
+  id          Int           @id @default(autoincrement())
+  postId      Int
+  parentId    Int?
+  authorName  String
+  authorEmail String?
+  content     String
+  status      CommentStatus @default(PUBLISHED)
+  post        Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent      Comment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies     Comment[]     @relation("CommentReplies")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([postId])
+  @@index([parentId])
+}
+
+model PostLike {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  ipHash    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([postId, ipHash])
+  @@index([postId])
+}
+
+model PostView {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  ipHash    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([postId, ipHash])
+  @@index([postId])
 }
 
 model Category {

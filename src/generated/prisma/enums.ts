@@ -9,7 +9,9 @@
 * 🟢 You can import this file directly.
 */
 
+export const CommentStatus = {
+  PUBLISHED: 'PUBLISHED',
+  PENDING: 'PENDING'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type CommentStatus = (typeof CommentStatus)[keyof typeof CommentStatus]

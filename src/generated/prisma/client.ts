@@ -50,6 +50,21 @@ export type User = Prisma.UserModel
  */
 export type Post = Prisma.PostModel
 /**
+ * Model Comment
+ * 
+ */
+export type Comment = Prisma.CommentModel
+/**
+ * Model PostLike
+ * 
+ */
+export type PostLike = Prisma.PostLikeModel
+/**
+ * Model PostView
+ * 
+ */
+export type PostView = Prisma.PostViewModel
+/**
  * Model Category
  * 
  */
