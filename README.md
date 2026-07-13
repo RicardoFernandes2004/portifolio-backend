@@ -194,6 +194,10 @@ npm run test:e2e   # end-to-end
 npm run test:cov   # cobertura
 ```
 
+## Contribuindo
+
+Contribuições são bem-vindas! Veja o [guia de contribuição](CONTRIBUTING.md) para convenções de código, commits, migrações e o checklist de PR.
+
 ## Licença
 
 Projeto sob licença [MIT](https://opensource.org/licenses/MIT). Sinta-se livre para usar como base do seu próprio portfólio.
