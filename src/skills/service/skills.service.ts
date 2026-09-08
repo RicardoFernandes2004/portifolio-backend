@@ -13,6 +13,7 @@ import type {
     UpdateSkillData,
 } from 'src/skills/service/dtos/skill.ports';
 import { SkillRepository } from 'src/skills/infra/repositories/skill.repository';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class SkillsService {
@@ -41,6 +42,7 @@ export class SkillsService {
             name: dto.name,
             level: dto.level,
             description: dto.description ?? null,
+            descriptionEn: trimEn(dto.descriptionEn),
             icon: dto.icon ?? null,
         };
 
@@ -61,6 +63,7 @@ export class SkillsService {
             data.level = dto.level;
         }
         if (dto.description !== undefined) data.description = dto.description;
+        data.descriptionEn = trimEn(dto.descriptionEn);
         if (dto.icon !== undefined) data.icon = dto.icon;
 
         const updated = await this.repository.update(id, data);

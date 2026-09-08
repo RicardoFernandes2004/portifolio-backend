@@ -4,6 +4,12 @@ export class CreateLanguageDto {
     @ApiProperty({ example: 'Inglês' })
     name!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `name`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    nameEn?: string | null;
+
     @ApiProperty({
         example: 4,
         description: 'Proficiência (escala 1-5; 5 = nativo/fluente)',
@@ -15,6 +21,12 @@ export class UpdateLanguageDto {
     @ApiPropertyOptional({ example: 'Espanhol' })
     name?: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `name`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    nameEn?: string | null;
+
     @ApiPropertyOptional({ example: 3 })
     level?: number;
 }
@@ -25,6 +37,12 @@ export class LanguageResponseDto {
 
     @ApiProperty({ example: 'Inglês' })
     name!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `name`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    nameEn!: string | null;
 
     @ApiProperty({ example: 4 })
     level!: number;

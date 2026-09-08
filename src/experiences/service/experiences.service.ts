@@ -13,6 +13,7 @@ import type {
     UpdateExperienceData,
 } from 'src/experiences/service/dtos/experience.ports';
 import { ExperienceRepository } from 'src/experiences/infra/repositories/experience.repository';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class ExperiencesService {
@@ -41,7 +42,9 @@ export class ExperiencesService {
         const data: PersistExperienceData = {
             company: dto.company,
             position: dto.position,
+            positionEn: trimEn(dto.positionEn),
             description: dto.description,
+            descriptionEn: trimEn(dto.descriptionEn),
             startDate: this.toDate(dto.startDate, 'startDate'),
             endDate: dto.endDate ? this.toDate(dto.endDate, 'endDate') : null,
         };
@@ -61,7 +64,9 @@ export class ExperiencesService {
         const data: UpdateExperienceData = {};
         if (dto.company !== undefined) data.company = dto.company;
         if (dto.position !== undefined) data.position = dto.position;
+        data.positionEn = trimEn(dto.positionEn);
         if (dto.description !== undefined) data.description = dto.description;
+        data.descriptionEn = trimEn(dto.descriptionEn);
         if (dto.startDate !== undefined)
             data.startDate = this.toDate(dto.startDate, 'startDate');
         if (dto.endDate !== undefined) {

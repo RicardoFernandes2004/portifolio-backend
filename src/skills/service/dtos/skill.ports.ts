@@ -4,6 +4,7 @@ export interface PersistSkillData {
     name: string;
     level: number;
     description: string | null;
+    descriptionEn?: string | null;
     icon: string | null;
 }
 
@@ -11,6 +12,7 @@ export interface UpdateSkillData {
     name?: string;
     level?: number;
     description?: string | null;
+    descriptionEn?: string | null;
     icon?: string | null;
 }
 

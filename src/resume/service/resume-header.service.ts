@@ -10,6 +10,7 @@ import type {
     UpdateResumeHeaderData,
 } from 'src/resume/service/dtos/resume.ports';
 import { ResumeHeaderRepository } from 'src/resume/infra/repositories/resume-header.repository';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class ResumeHeaderService {
@@ -35,7 +36,9 @@ export class ResumeHeaderService {
             const data: UpdateResumeHeaderData = {};
             if (dto.name !== undefined) data.name = dto.name;
             if (dto.jobTitle !== undefined) data.jobTitle = dto.jobTitle;
+            data.jobTitleEn = trimEn(dto.jobTitleEn);
             if (dto.summary !== undefined) data.summary = dto.summary;
+            data.summaryEn = trimEn(dto.summaryEn);
             if (dto.location !== undefined) data.location = dto.location;
             if (dto.email !== undefined) data.email = dto.email;
             if (dto.phone !== undefined) data.phone = dto.phone;
@@ -70,7 +73,9 @@ export class ResumeHeaderService {
         const data: PersistResumeHeader = {
             name: dto.name as string,
             jobTitle: dto.jobTitle as string,
+            jobTitleEn: trimEn(dto.jobTitleEn),
             summary: dto.summary as string,
+            summaryEn: trimEn(dto.summaryEn),
             location: dto.location as string,
             email: dto.email as string,
             phone: dto.phone as string,

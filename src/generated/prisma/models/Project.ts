@@ -37,7 +37,9 @@ export type ProjectSumAggregateOutputType = {
 export type ProjectMinAggregateOutputType = {
   id: number | null
   title: string | null
+  titleEn: string | null
   description: string | null
+  descriptionEn: string | null
   link: string | null
   githubLink: string | null
   youtubeLink: string | null
@@ -51,7 +53,9 @@ export type ProjectMinAggregateOutputType = {
 export type ProjectMaxAggregateOutputType = {
   id: number | null
   title: string | null
+  titleEn: string | null
   description: string | null
+  descriptionEn: string | null
   link: string | null
   githubLink: string | null
   youtubeLink: string | null
@@ -65,7 +69,9 @@ export type ProjectMaxAggregateOutputType = {
 export type ProjectCountAggregateOutputType = {
   id: number
   title: number
+  titleEn: number
   description: number
+  descriptionEn: number
   images: number
   technologies: number
   link: number
@@ -92,7 +98,9 @@ export type ProjectSumAggregateInputType = {
 export type ProjectMinAggregateInputType = {
   id?: true
   title?: true
+  titleEn?: true
   description?: true
+  descriptionEn?: true
   link?: true
   githubLink?: true
   youtubeLink?: true
@@ -106,7 +114,9 @@ export type ProjectMinAggregateInputType = {
 export type ProjectMaxAggregateInputType = {
   id?: true
   title?: true
+  titleEn?: true
   description?: true
+  descriptionEn?: true
   link?: true
   githubLink?: true
   youtubeLink?: true
@@ -120,7 +130,9 @@ export type ProjectMaxAggregateInputType = {
 export type ProjectCountAggregateInputType = {
   id?: true
   title?: true
+  titleEn?: true
   description?: true
+  descriptionEn?: true
   images?: true
   technologies?: true
   link?: true
@@ -224,7 +236,9 @@ export type ProjectGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type ProjectGroupByOutputType = {
   id: number
   title: string
+  titleEn: string | null
   description: string
+  descriptionEn: string | null
   images: string[]
   technologies: string[]
   link: string | null
@@ -264,7 +278,9 @@ export type ProjectWhereInput = {
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   id?: Prisma.IntFilter<"Project"> | number
   title?: Prisma.StringFilter<"Project"> | string
+  titleEn?: Prisma.StringNullableFilter<"Project"> | string | null
   description?: Prisma.StringFilter<"Project"> | string
+  descriptionEn?: Prisma.StringNullableFilter<"Project"> | string | null
   images?: Prisma.StringNullableListFilter<"Project">
   technologies?: Prisma.StringNullableListFilter<"Project">
   link?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -281,7 +297,9 @@ export type ProjectWhereInput = {
 export type ProjectOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleEn?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrder
+  descriptionEn?: Prisma.SortOrderInput | Prisma.SortOrder
   images?: Prisma.SortOrder
   technologies?: Prisma.SortOrder
   link?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -301,7 +319,9 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ProjectWhereInput[]
   NOT?: Prisma.ProjectWhereInput | Prisma.ProjectWhereInput[]
   title?: Prisma.StringFilter<"Project"> | string
+  titleEn?: Prisma.StringNullableFilter<"Project"> | string | null
   description?: Prisma.StringFilter<"Project"> | string
+  descriptionEn?: Prisma.StringNullableFilter<"Project"> | string | null
   images?: Prisma.StringNullableListFilter<"Project">
   technologies?: Prisma.StringNullableListFilter<"Project">
   link?: Prisma.StringNullableFilter<"Project"> | string | null
@@ -318,7 +338,9 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
 export type ProjectOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleEn?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrder
+  descriptionEn?: Prisma.SortOrderInput | Prisma.SortOrder
   images?: Prisma.SortOrder
   technologies?: Prisma.SortOrder
   link?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -343,7 +365,9 @@ export type ProjectScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ProjectScalarWhereWithAggregatesInput | Prisma.ProjectScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Project"> | number
   title?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  titleEn?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   description?: Prisma.StringWithAggregatesFilter<"Project"> | string
+  descriptionEn?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   images?: Prisma.StringNullableListFilter<"Project">
   technologies?: Prisma.StringNullableListFilter<"Project">
   link?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
@@ -359,7 +383,9 @@ export type ProjectScalarWhereWithAggregatesInput = {
 
 export type ProjectCreateInput = {
   title: string
+  titleEn?: string | null
   description: string
+  descriptionEn?: string | null
   images?: Prisma.ProjectCreateimagesInput | string[]
   technologies?: Prisma.ProjectCreatetechnologiesInput | string[]
   link?: string | null
@@ -376,7 +402,9 @@ export type ProjectCreateInput = {
 export type ProjectUncheckedCreateInput = {
   id?: number
   title: string
+  titleEn?: string | null
   description: string
+  descriptionEn?: string | null
   images?: Prisma.ProjectCreateimagesInput | string[]
   technologies?: Prisma.ProjectCreatetechnologiesInput | string[]
   link?: string | null
@@ -392,7 +420,9 @@ export type ProjectUncheckedCreateInput = {
 
 export type ProjectUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ProjectUpdateimagesInput | string[]
   technologies?: Prisma.ProjectUpdatetechnologiesInput | string[]
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -409,7 +439,9 @@ export type ProjectUpdateInput = {
 export type ProjectUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ProjectUpdateimagesInput | string[]
   technologies?: Prisma.ProjectUpdatetechnologiesInput | string[]
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -426,7 +458,9 @@ export type ProjectUncheckedUpdateInput = {
 export type ProjectCreateManyInput = {
   id?: number
   title: string
+  titleEn?: string | null
   description: string
+  descriptionEn?: string | null
   images?: Prisma.ProjectCreateimagesInput | string[]
   technologies?: Prisma.ProjectCreatetechnologiesInput | string[]
   link?: string | null
@@ -442,7 +476,9 @@ export type ProjectCreateManyInput = {
 
 export type ProjectUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ProjectUpdateimagesInput | string[]
   technologies?: Prisma.ProjectUpdatetechnologiesInput | string[]
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -459,7 +495,9 @@ export type ProjectUpdateManyMutationInput = {
 export type ProjectUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  titleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  descriptionEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   images?: Prisma.ProjectUpdateimagesInput | string[]
   technologies?: Prisma.ProjectUpdatetechnologiesInput | string[]
   link?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -476,7 +514,9 @@ export type ProjectUncheckedUpdateManyInput = {
 export type ProjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleEn?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  descriptionEn?: Prisma.SortOrder
   images?: Prisma.SortOrder
   technologies?: Prisma.SortOrder
   link?: Prisma.SortOrder
@@ -497,7 +537,9 @@ export type ProjectAvgOrderByAggregateInput = {
 export type ProjectMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleEn?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  descriptionEn?: Prisma.SortOrder
   link?: Prisma.SortOrder
   githubLink?: Prisma.SortOrder
   youtubeLink?: Prisma.SortOrder
@@ -511,7 +553,9 @@ export type ProjectMaxOrderByAggregateInput = {
 export type ProjectMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  titleEn?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  descriptionEn?: Prisma.SortOrder
   link?: Prisma.SortOrder
   githubLink?: Prisma.SortOrder
   youtubeLink?: Prisma.SortOrder
@@ -558,7 +602,9 @@ export type ProjectUpdatecollaboratorsInput = {
 export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  titleEn?: boolean
   description?: boolean
+  descriptionEn?: boolean
   images?: boolean
   technologies?: boolean
   link?: boolean
@@ -575,7 +621,9 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  titleEn?: boolean
   description?: boolean
+  descriptionEn?: boolean
   images?: boolean
   technologies?: boolean
   link?: boolean
@@ -592,7 +640,9 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  titleEn?: boolean
   description?: boolean
+  descriptionEn?: boolean
   images?: boolean
   technologies?: boolean
   link?: boolean
@@ -609,7 +659,9 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type ProjectSelectScalar = {
   id?: boolean
   title?: boolean
+  titleEn?: boolean
   description?: boolean
+  descriptionEn?: boolean
   images?: boolean
   technologies?: boolean
   link?: boolean
@@ -623,7 +675,7 @@ export type ProjectSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "images" | "technologies" | "link" | "githubLink" | "youtubeLink" | "instagramLink" | "twitterLink" | "facebookLink" | "collaborators" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "titleEn" | "description" | "descriptionEn" | "images" | "technologies" | "link" | "githubLink" | "youtubeLink" | "instagramLink" | "twitterLink" | "facebookLink" | "collaborators" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
 
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
@@ -631,7 +683,9 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     title: string
+    titleEn: string | null
     description: string
+    descriptionEn: string | null
     images: string[]
     technologies: string[]
     link: string | null
@@ -1068,7 +1122,9 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
 export interface ProjectFieldRefs {
   readonly id: Prisma.FieldRef<"Project", 'Int'>
   readonly title: Prisma.FieldRef<"Project", 'String'>
+  readonly titleEn: Prisma.FieldRef<"Project", 'String'>
   readonly description: Prisma.FieldRef<"Project", 'String'>
+  readonly descriptionEn: Prisma.FieldRef<"Project", 'String'>
   readonly images: Prisma.FieldRef<"Project", 'String[]'>
   readonly technologies: Prisma.FieldRef<"Project", 'String[]'>
   readonly link: Prisma.FieldRef<"Project", 'String'>

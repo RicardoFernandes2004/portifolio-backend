@@ -17,6 +17,7 @@ import type {
 } from 'src/posts/service/dtos/post.ports';
 import { PostRepository } from 'src/posts/infra/repositories/post.repository';
 import { slugify } from 'src/posts/service/utils/slugify';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class PostsService {
@@ -72,8 +73,11 @@ export class PostsService {
         const data: PersistPostData = {
             slug,
             title,
+            titleEn: trimEn(dto.titleEn),
             summary,
+            summaryEn: trimEn(dto.summaryEn),
             content,
+            contentEn: trimEn(dto.contentEn),
             images: dto.images ?? [],
             categoryId: dto.categoryId,
             publishedAt: this.toDateOrNull(dto.publishedAt, 'publishedAt'),
@@ -121,6 +125,10 @@ export class PostsService {
                 'publishedAt',
             );
         }
+
+        data.titleEn = trimEn(dto.titleEn);
+        data.summaryEn = trimEn(dto.summaryEn);
+        data.contentEn = trimEn(dto.contentEn);
 
         if (dto.slug !== undefined || dto.title !== undefined) {
             const baseSource =

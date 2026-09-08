@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateCategoryDto {
     @ApiProperty({
@@ -6,6 +6,12 @@ export class CreateCategoryDto {
         description: 'Nome da categoria do post',
     })
     name!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `name`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    nameEn?: string | null;
 }
 
 export class UpdateCategoryDto {
@@ -15,6 +21,12 @@ export class UpdateCategoryDto {
         required: false,
     })
     name?: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `name`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    nameEn?: string | null;
 }
 
 export class CategoryResponseDto {
@@ -23,6 +35,12 @@ export class CategoryResponseDto {
 
     @ApiProperty({ example: 'Backend' })
     name!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `name`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    nameEn!: string | null;
 
     @ApiProperty({ example: '2026-04-26T19:00:00.000Z' })
     createdAt!: Date;

@@ -14,6 +14,7 @@ import type {
     UpdateCategoryData,
 } from 'src/categories/service/dtos/category.ports';
 import { CategoryRepository } from 'src/categories/infra/repositories/category.repository';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class CategoriesService {
@@ -38,7 +39,10 @@ export class CategoriesService {
             throw new BadRequestException('name is required');
         }
 
-        const data: PersistCategoryData = { name };
+        const data: PersistCategoryData = {
+            name,
+            nameEn: trimEn(dto.nameEn),
+        };
         const created = await this.repository.create(data);
         return Category.fromPrisma(created);
     }
@@ -57,6 +61,7 @@ export class CategoriesService {
             }
             data.name = name;
         }
+        data.nameEn = trimEn(dto.nameEn);
 
         const updated = await this.repository.update(id, data);
         return Category.fromPrisma(updated);

@@ -13,6 +13,7 @@ import type {
     UpdateEducationData,
 } from 'src/educations/service/dtos/education.ports';
 import { EducationRepository } from 'src/educations/infra/repositories/education.repository';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class EducationsService {
@@ -41,7 +42,9 @@ export class EducationsService {
         const data: PersistEducationData = {
             school: dto.school,
             degree: dto.degree,
+            degreeEn: trimEn(dto.degreeEn),
             fieldOfStudy: dto.fieldOfStudy,
+            fieldOfStudyEn: trimEn(dto.fieldOfStudyEn),
             startDate: this.toDate(dto.startDate, 'startDate'),
             endDate: dto.endDate ? this.toDate(dto.endDate, 'endDate') : null,
         };
@@ -61,7 +64,9 @@ export class EducationsService {
         const data: UpdateEducationData = {};
         if (dto.school !== undefined) data.school = dto.school;
         if (dto.degree !== undefined) data.degree = dto.degree;
+        data.degreeEn = trimEn(dto.degreeEn);
         if (dto.fieldOfStudy !== undefined) data.fieldOfStudy = dto.fieldOfStudy;
+        data.fieldOfStudyEn = trimEn(dto.fieldOfStudyEn);
         if (dto.startDate !== undefined)
             data.startDate = this.toDate(dto.startDate, 'startDate');
         if (dto.endDate !== undefined) {

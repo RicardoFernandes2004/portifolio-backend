@@ -4,10 +4,22 @@ export class CreateProjectDto {
     @ApiProperty({ example: 'Portfolio Backend' })
     title!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `title`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    titleEn?: string | null;
+
     @ApiProperty({
         example: 'API NestJS + Prisma com blog, currículo dinâmico e auth.',
     })
     description!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn?: string | null;
 
     @ApiPropertyOptional({
         example: ['https://cdn.exemplo.com/projects/portfolio/cover.png'],
@@ -65,8 +77,20 @@ export class UpdateProjectDto {
     @ApiPropertyOptional({ example: 'Portfolio Backend v2' })
     title?: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `title`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    titleEn?: string | null;
+
     @ApiPropertyOptional({ example: 'Nova descrição' })
     description?: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn?: string | null;
 
     @ApiPropertyOptional({ type: [String] })
     images?: string[];
@@ -103,10 +127,22 @@ export class ProjectResponseDto {
     @ApiProperty({ example: 'Portfolio Backend' })
     title!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `title`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    titleEn!: string | null;
+
     @ApiProperty({
         example: 'API NestJS + Prisma com blog, currículo dinâmico e auth.',
     })
     description!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn!: string | null;
 
     @ApiProperty({
         example: ['https://cdn.exemplo.com/projects/portfolio/cover.png'],

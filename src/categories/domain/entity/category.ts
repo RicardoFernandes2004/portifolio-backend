@@ -16,6 +16,10 @@ export class Category {
         return this.props.name;
     }
 
+    get nameEn(): string | null {
+        return this.props.nameEn;
+    }
+
     get createdAt(): Date {
         return this.props.createdAt;
     }
@@ -28,6 +32,7 @@ export class Category {
         const dto = new CategoryResponseDto();
         dto.id = this.id;
         dto.name = this.name;
+        dto.nameEn = this.nameEn;
         dto.createdAt = this.createdAt;
         dto.updatedAt = this.updatedAt;
         return dto;

@@ -3,7 +3,9 @@ import type { Experience } from 'src/generated/prisma/client';
 export interface PersistExperienceData {
     company: string;
     position: string;
+    positionEn?: string | null;
     description: string;
+    descriptionEn?: string | null;
     startDate: Date;
     endDate: Date | null;
 }
@@ -11,7 +13,9 @@ export interface PersistExperienceData {
 export interface UpdateExperienceData {
     company?: string;
     position?: string;
+    positionEn?: string | null;
     description?: string;
+    descriptionEn?: string | null;
     startDate?: Date;
     endDate?: Date | null;
 }

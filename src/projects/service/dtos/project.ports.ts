@@ -2,7 +2,9 @@ import type { Project } from 'src/generated/prisma/client';
 
 export interface PersistProjectData {
     title: string;
+    titleEn?: string | null;
     description: string;
+    descriptionEn?: string | null;
     images: string[];
     technologies: string[];
     link: string | null;
@@ -16,7 +18,9 @@ export interface PersistProjectData {
 
 export interface UpdateProjectData {
     title?: string;
+    titleEn?: string | null;
     description?: string;
+    descriptionEn?: string | null;
     images?: string[];
     technologies?: string[];
     link?: string | null;

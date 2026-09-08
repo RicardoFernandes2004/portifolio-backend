@@ -13,6 +13,8 @@ datasource db {
   provider = "postgresql"
 }
 
+// ponytail: colunas por locale servem 2 idiomas; 3o idioma -> tabela
+// Translation(entity, entityId, field, locale)
 model User {
   id                Int      @id @default(autoincrement())
   username          String   @unique
@@ -30,12 +32,15 @@ model Post {
   id         Int      @id @default(autoincrement())
   slug       String   @unique
   title      String
+  titleEn    String?
   content    String
+  contentEn  String?
   images     String[]
   categoryId Int
   publishedAt DateTime?
   category   Category @relation(fields: [categoryId], references: [id])
   summary    String
+  summaryEn  String?
   comments   Comment[]
   likes      PostLike[]
   views      PostView[]
@@ -91,6 +96,7 @@ model PostView {
 model Category {
   id        Int      @id @default(autoincrement())
   name      String
+  nameEn    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]
@@ -100,7 +106,9 @@ model ResumeHeader {
   id        Int      @id @default(autoincrement())
   name      String
   jobTitle  String
+  jobTitleEn String?
   summary   String
+  summaryEn String?
   location  String
   email     String
   phone     String
@@ -114,7 +122,9 @@ model ResumeHeader {
 model Project {
   id            Int      @id @default(autoincrement())
   title         String
+  titleEn       String?
   description   String
+  descriptionEn String?
   images        String[]
   technologies  String[]
   link          String?
@@ -133,6 +143,7 @@ model Skill {
   name        String
   level       Int
   description String?
+  descriptionEn String?
   icon        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -142,7 +153,9 @@ model Experience {
   id          Int       @id @default(autoincrement())
   company     String
   position    String
+  positionEn  String?
   description String
+  descriptionEn String?
   startDate   DateTime
   endDate     DateTime?
   createdAt   DateTime  @default(now())
@@ -153,7 +166,9 @@ model Education {
   id           Int       @id @default(autoincrement())
   school       String
   degree       String
+  degreeEn     String?
   fieldOfStudy String
+  fieldOfStudyEn String?
   startDate    DateTime
   endDate      DateTime?
   createdAt    DateTime  @default(now())
@@ -172,6 +187,7 @@ model Contact {
 model Language {
   id        Int      @id @default(autoincrement())
   name      String
+  nameEn    String?
   level     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

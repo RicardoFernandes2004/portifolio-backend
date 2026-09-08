@@ -45,12 +45,24 @@ export class Post {
         return this.props.title;
     }
 
+    get titleEn(): string | null {
+        return this.props.titleEn;
+    }
+
     get summary(): string {
         return this.props.summary;
     }
 
+    get summaryEn(): string | null {
+        return this.props.summaryEn;
+    }
+
     get content(): string {
         return this.props.content;
+    }
+
+    get contentEn(): string | null {
+        return this.props.contentEn;
     }
 
     get images(): string[] {
@@ -99,8 +111,11 @@ export class Post {
         dto.id = this.id;
         dto.slug = this.slug;
         dto.title = this.title;
+        dto.titleEn = this.titleEn;
         dto.summary = this.summary;
+        dto.summaryEn = this.summaryEn;
         dto.content = this.content;
+        dto.contentEn = this.contentEn;
         dto.images = this.images;
         dto.categoryId = this.categoryId;
         dto.category = this._category ? this._category.toResponseDto() : null;

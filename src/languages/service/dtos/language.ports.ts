@@ -2,11 +2,13 @@ import type { Language } from 'src/generated/prisma/client';
 
 export interface PersistLanguageData {
     name: string;
+    nameEn?: string | null;
     level: number;
 }
 
 export interface UpdateLanguageData {
     name?: string;
+    nameEn?: string | null;
     level?: number;
 }
 

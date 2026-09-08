@@ -8,10 +8,22 @@ export class UpdateResumeHeaderDto {
     jobTitle?: string;
 
     @ApiPropertyOptional({
+        description: 'Traducao EN de `jobTitle`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    jobTitleEn?: string | null;
+
+    @ApiPropertyOptional({
         example:
             'Engenheiro de software com foco em backend, distributed systems e DX.',
     })
     summary?: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `summary`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    summaryEn?: string | null;
 
     @ApiPropertyOptional({ example: 'Porto Alegre, RS, Brasil' })
     location?: string;
@@ -42,11 +54,23 @@ export class ResumeHeaderResponseDto {
     @ApiProperty({ example: 'Senior Backend Engineer' })
     jobTitle!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `jobTitle`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    jobTitleEn!: string | null;
+
     @ApiProperty({
         example:
             'Engenheiro de software com foco em backend, distributed systems e DX.',
     })
     summary!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `summary`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    summaryEn!: string | null;
 
     @ApiProperty({ example: 'Porto Alegre, RS, Brasil' })
     location!: string;

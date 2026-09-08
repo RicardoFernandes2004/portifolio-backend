@@ -3,8 +3,11 @@ import type { PrismaPostWithCategory } from 'src/posts/domain/entity/post';
 export interface PersistPostData {
     slug: string;
     title: string;
+    titleEn?: string | null;
     summary: string;
+    summaryEn?: string | null;
     content: string;
+    contentEn?: string | null;
     images: string[];
     categoryId: number;
     publishedAt: Date | null;
@@ -13,8 +16,11 @@ export interface PersistPostData {
 export interface UpdatePostData {
     slug?: string;
     title?: string;
+    titleEn?: string | null;
     summary?: string;
+    summaryEn?: string | null;
     content?: string;
+    contentEn?: string | null;
     images?: string[];
     categoryId?: number;
     publishedAt?: Date | null;
