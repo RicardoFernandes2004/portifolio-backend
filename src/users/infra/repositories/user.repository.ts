@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import type { User } from "src/generated/prisma/client";
 import type {
     PersistUserData,
+    UpdateUserSecurityData,
     UserRepositoryPort,
 } from "src/users/service/dtos/user.ports";
 import { PrismaService } from "../../../../prisma/prisma.service";
@@ -26,6 +27,16 @@ export class UserRepository implements UserRepositoryPort {
         return this.prisma.user.findUnique({ where: { id } });
     }
 
+    async findByEmail(email: string): Promise<User | null> {
+        return this.prisma.user.findUnique({ where: { email } });
+    }
+
+    async findByPasswordResetTokenHash(hash: string): Promise<User | null> {
+        return this.prisma.user.findFirst({
+            where: { passwordResetTokenHash: hash },
+        });
+    }
+
     async create(data: PersistUserData): Promise<User> {
         return this.prisma.user.create({
             data: {
@@ -47,5 +58,12 @@ export class UserRepository implements UserRepositoryPort {
             where: { id },
             data: { jwtToken, jwtTokenExpiresAt },
         });
+    }
+
+    async updateSecurity(
+        id: number,
+        data: UpdateUserSecurityData,
+    ): Promise<User> {
+        return this.prisma.user.update({ where: { id }, data });
     }
 }

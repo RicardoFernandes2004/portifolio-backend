@@ -91,6 +91,11 @@ export const UserScalarFieldEnum = {
   jwtTokenExpiresAt: 'jwtTokenExpiresAt',
   jwtTokenCreatedAt: 'jwtTokenCreatedAt',
   jwtTokenUpdatedAt: 'jwtTokenUpdatedAt',
+  twoFactorSecret: 'twoFactorSecret',
+  twoFactorEnabledAt: 'twoFactorEnabledAt',
+  twoFactorBackupCodes: 'twoFactorBackupCodes',
+  passwordResetTokenHash: 'passwordResetTokenHash',
+  passwordResetExpiresAt: 'passwordResetExpiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

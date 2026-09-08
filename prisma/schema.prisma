@@ -13,8 +13,6 @@ datasource db {
   provider = "postgresql"
 }
 
-// ponytail: colunas por locale servem 2 idiomas; 3o idioma -> tabela
-// Translation(entity, entityId, field, locale)
 model User {
   id                Int      @id @default(autoincrement())
   username          String   @unique
@@ -24,10 +22,25 @@ model User {
   jwtTokenExpiresAt DateTime
   jwtTokenCreatedAt DateTime @default(now())
   jwtTokenUpdatedAt DateTime @updatedAt
+
+  // 2FA. `twoFactorEnabledAt` é o flag: secret preenchido sem ele = enrolamento
+  // começado e não confirmado, que não exige nada no login.
+  twoFactorSecret      String?
+  twoFactorEnabledAt   DateTime?
+  // Hashes SHA-256 dos códigos de uso único. Item sai do array ao ser usado.
+  twoFactorBackupCodes String[]
+
+  // Reset de senha. SHA-256 e não bcrypt: o token é aleatório de alta entropia
+  // gerado por nós, não senha humana — bcrypt só somaria latência.
+  passwordResetTokenHash String?
+  passwordResetExpiresAt DateTime?
+
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
 
+// ponytail: colunas por locale servem 2 idiomas; 3o idioma -> tabela
+// Translation(entity, entityId, field, locale)
 model Post {
   id         Int      @id @default(autoincrement())
   slug       String   @unique

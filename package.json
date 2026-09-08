@@ -23,7 +23,9 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "prisma db seed",
-    "seed": "nest build && node dist/prisma/seed.js"
+    "seed": "nest build && node dist/prisma/seed.js",
+    "check:security": "tsx scripts/security-check.ts",
+    "seed:resume": "tsx scripts/seed-resume.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -38,6 +40,8 @@
     "dotenv": "^17.4.2",
     "dotenv-expand": "^13.0.0",
     "express": "^5.2.1",
+    "nodemailer": "^10.0.1",
+    "otplib": "^13.5.0",
     "pdfmake": "^0.3.7",
     "pg": "^8.20.0",
     "postgres": "^3.4.9",
@@ -53,6 +57,7 @@
     "@types/express": "^5.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.7",
+    "@types/nodemailer": "^8.0.1",
     "@types/pdfmake": "^0.3.2",
     "@types/pg": "^8.20.0",
     "@types/supertest": "^6.0.2",

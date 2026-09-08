@@ -40,6 +40,33 @@ export class User {
         return this.props.jwtTokenUpdatedAt;
     }
 
+    /** Segredo TOTP. Preenchido no setup, mas só vale depois do enable. */
+    get twoFactorSecret(): string | null {
+        return this.props.twoFactorSecret;
+    }
+
+    get twoFactorEnabledAt(): Date | null {
+        return this.props.twoFactorEnabledAt;
+    }
+
+    /** É o `twoFactorEnabledAt` que manda, não a presença do secret. */
+    get hasTwoFactor(): boolean {
+        return this.props.twoFactorEnabledAt !== null;
+    }
+
+    /** Hashes SHA-256 dos códigos de backup ainda não usados. */
+    get twoFactorBackupCodes(): string[] {
+        return this.props.twoFactorBackupCodes;
+    }
+
+    get passwordResetTokenHash(): string | null {
+        return this.props.passwordResetTokenHash;
+    }
+
+    get passwordResetExpiresAt(): Date | null {
+        return this.props.passwordResetExpiresAt;
+    }
+
     get createdAt(): Date {
         return this.props.createdAt;
     }
@@ -53,6 +80,7 @@ export class User {
             id: this.id,
             username: this.username,
             email: this.email,
+            twoFactorEnabled: this.hasTwoFactor,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
         };
