@@ -2,10 +2,12 @@ import type { Category } from 'src/generated/prisma/client';
 
 export interface PersistCategoryData {
     name: string;
+    nameEn?: string | null;
 }
 
 export interface UpdateCategoryData {
     name?: string;
+    nameEn?: string | null;
 }
 
 export interface CategoryRepositoryPort {

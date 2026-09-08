@@ -38,7 +38,9 @@ export type ResumeHeaderMinAggregateOutputType = {
   id: number | null
   name: string | null
   jobTitle: string | null
+  jobTitleEn: string | null
   summary: string | null
+  summaryEn: string | null
   location: string | null
   email: string | null
   phone: string | null
@@ -53,7 +55,9 @@ export type ResumeHeaderMaxAggregateOutputType = {
   id: number | null
   name: string | null
   jobTitle: string | null
+  jobTitleEn: string | null
   summary: string | null
+  summaryEn: string | null
   location: string | null
   email: string | null
   phone: string | null
@@ -68,7 +72,9 @@ export type ResumeHeaderCountAggregateOutputType = {
   id: number
   name: number
   jobTitle: number
+  jobTitleEn: number
   summary: number
+  summaryEn: number
   location: number
   email: number
   phone: number
@@ -93,7 +99,9 @@ export type ResumeHeaderMinAggregateInputType = {
   id?: true
   name?: true
   jobTitle?: true
+  jobTitleEn?: true
   summary?: true
+  summaryEn?: true
   location?: true
   email?: true
   phone?: true
@@ -108,7 +116,9 @@ export type ResumeHeaderMaxAggregateInputType = {
   id?: true
   name?: true
   jobTitle?: true
+  jobTitleEn?: true
   summary?: true
+  summaryEn?: true
   location?: true
   email?: true
   phone?: true
@@ -123,7 +133,9 @@ export type ResumeHeaderCountAggregateInputType = {
   id?: true
   name?: true
   jobTitle?: true
+  jobTitleEn?: true
   summary?: true
+  summaryEn?: true
   location?: true
   email?: true
   phone?: true
@@ -225,7 +237,9 @@ export type ResumeHeaderGroupByOutputType = {
   id: number
   name: string
   jobTitle: string
+  jobTitleEn: string | null
   summary: string
+  summaryEn: string | null
   location: string
   email: string
   phone: string
@@ -263,7 +277,9 @@ export type ResumeHeaderWhereInput = {
   id?: Prisma.IntFilter<"ResumeHeader"> | number
   name?: Prisma.StringFilter<"ResumeHeader"> | string
   jobTitle?: Prisma.StringFilter<"ResumeHeader"> | string
+  jobTitleEn?: Prisma.StringNullableFilter<"ResumeHeader"> | string | null
   summary?: Prisma.StringFilter<"ResumeHeader"> | string
+  summaryEn?: Prisma.StringNullableFilter<"ResumeHeader"> | string | null
   location?: Prisma.StringFilter<"ResumeHeader"> | string
   email?: Prisma.StringFilter<"ResumeHeader"> | string
   phone?: Prisma.StringFilter<"ResumeHeader"> | string
@@ -278,7 +294,9 @@ export type ResumeHeaderOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   jobTitle?: Prisma.SortOrder
+  jobTitleEn?: Prisma.SortOrderInput | Prisma.SortOrder
   summary?: Prisma.SortOrder
+  summaryEn?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -296,7 +314,9 @@ export type ResumeHeaderWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ResumeHeaderWhereInput | Prisma.ResumeHeaderWhereInput[]
   name?: Prisma.StringFilter<"ResumeHeader"> | string
   jobTitle?: Prisma.StringFilter<"ResumeHeader"> | string
+  jobTitleEn?: Prisma.StringNullableFilter<"ResumeHeader"> | string | null
   summary?: Prisma.StringFilter<"ResumeHeader"> | string
+  summaryEn?: Prisma.StringNullableFilter<"ResumeHeader"> | string | null
   location?: Prisma.StringFilter<"ResumeHeader"> | string
   email?: Prisma.StringFilter<"ResumeHeader"> | string
   phone?: Prisma.StringFilter<"ResumeHeader"> | string
@@ -311,7 +331,9 @@ export type ResumeHeaderOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   jobTitle?: Prisma.SortOrder
+  jobTitleEn?: Prisma.SortOrderInput | Prisma.SortOrder
   summary?: Prisma.SortOrder
+  summaryEn?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -334,7 +356,9 @@ export type ResumeHeaderScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"ResumeHeader"> | number
   name?: Prisma.StringWithAggregatesFilter<"ResumeHeader"> | string
   jobTitle?: Prisma.StringWithAggregatesFilter<"ResumeHeader"> | string
+  jobTitleEn?: Prisma.StringNullableWithAggregatesFilter<"ResumeHeader"> | string | null
   summary?: Prisma.StringWithAggregatesFilter<"ResumeHeader"> | string
+  summaryEn?: Prisma.StringNullableWithAggregatesFilter<"ResumeHeader"> | string | null
   location?: Prisma.StringWithAggregatesFilter<"ResumeHeader"> | string
   email?: Prisma.StringWithAggregatesFilter<"ResumeHeader"> | string
   phone?: Prisma.StringWithAggregatesFilter<"ResumeHeader"> | string
@@ -348,7 +372,9 @@ export type ResumeHeaderScalarWhereWithAggregatesInput = {
 export type ResumeHeaderCreateInput = {
   name: string
   jobTitle: string
+  jobTitleEn?: string | null
   summary: string
+  summaryEn?: string | null
   location: string
   email: string
   phone: string
@@ -363,7 +389,9 @@ export type ResumeHeaderUncheckedCreateInput = {
   id?: number
   name: string
   jobTitle: string
+  jobTitleEn?: string | null
   summary: string
+  summaryEn?: string | null
   location: string
   email: string
   phone: string
@@ -377,7 +405,9 @@ export type ResumeHeaderUncheckedCreateInput = {
 export type ResumeHeaderUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  jobTitleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  summaryEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -392,7 +422,9 @@ export type ResumeHeaderUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  jobTitleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  summaryEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -407,7 +439,9 @@ export type ResumeHeaderCreateManyInput = {
   id?: number
   name: string
   jobTitle: string
+  jobTitleEn?: string | null
   summary: string
+  summaryEn?: string | null
   location: string
   email: string
   phone: string
@@ -421,7 +455,9 @@ export type ResumeHeaderCreateManyInput = {
 export type ResumeHeaderUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  jobTitleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  summaryEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -436,7 +472,9 @@ export type ResumeHeaderUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  jobTitleEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  summaryEn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -451,7 +489,9 @@ export type ResumeHeaderCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   jobTitle?: Prisma.SortOrder
+  jobTitleEn?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  summaryEn?: Prisma.SortOrder
   location?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -470,7 +510,9 @@ export type ResumeHeaderMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   jobTitle?: Prisma.SortOrder
+  jobTitleEn?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  summaryEn?: Prisma.SortOrder
   location?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -485,7 +527,9 @@ export type ResumeHeaderMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   jobTitle?: Prisma.SortOrder
+  jobTitleEn?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  summaryEn?: Prisma.SortOrder
   location?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -506,7 +550,9 @@ export type ResumeHeaderSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   name?: boolean
   jobTitle?: boolean
+  jobTitleEn?: boolean
   summary?: boolean
+  summaryEn?: boolean
   location?: boolean
   email?: boolean
   phone?: boolean
@@ -521,7 +567,9 @@ export type ResumeHeaderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   name?: boolean
   jobTitle?: boolean
+  jobTitleEn?: boolean
   summary?: boolean
+  summaryEn?: boolean
   location?: boolean
   email?: boolean
   phone?: boolean
@@ -536,7 +584,9 @@ export type ResumeHeaderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   name?: boolean
   jobTitle?: boolean
+  jobTitleEn?: boolean
   summary?: boolean
+  summaryEn?: boolean
   location?: boolean
   email?: boolean
   phone?: boolean
@@ -551,7 +601,9 @@ export type ResumeHeaderSelectScalar = {
   id?: boolean
   name?: boolean
   jobTitle?: boolean
+  jobTitleEn?: boolean
   summary?: boolean
+  summaryEn?: boolean
   location?: boolean
   email?: boolean
   phone?: boolean
@@ -562,7 +614,7 @@ export type ResumeHeaderSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ResumeHeaderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "jobTitle" | "summary" | "location" | "email" | "phone" | "website" | "linkedin" | "github" | "createdAt" | "updatedAt", ExtArgs["result"]["resumeHeader"]>
+export type ResumeHeaderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "jobTitle" | "jobTitleEn" | "summary" | "summaryEn" | "location" | "email" | "phone" | "website" | "linkedin" | "github" | "createdAt" | "updatedAt", ExtArgs["result"]["resumeHeader"]>
 
 export type $ResumeHeaderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ResumeHeader"
@@ -571,7 +623,9 @@ export type $ResumeHeaderPayload<ExtArgs extends runtime.Types.Extensions.Intern
     id: number
     name: string
     jobTitle: string
+    jobTitleEn: string | null
     summary: string
+    summaryEn: string | null
     location: string
     email: string
     phone: string
@@ -1006,7 +1060,9 @@ export interface ResumeHeaderFieldRefs {
   readonly id: Prisma.FieldRef<"ResumeHeader", 'Int'>
   readonly name: Prisma.FieldRef<"ResumeHeader", 'String'>
   readonly jobTitle: Prisma.FieldRef<"ResumeHeader", 'String'>
+  readonly jobTitleEn: Prisma.FieldRef<"ResumeHeader", 'String'>
   readonly summary: Prisma.FieldRef<"ResumeHeader", 'String'>
+  readonly summaryEn: Prisma.FieldRef<"ResumeHeader", 'String'>
   readonly location: Prisma.FieldRef<"ResumeHeader", 'String'>
   readonly email: Prisma.FieldRef<"ResumeHeader", 'String'>
   readonly phone: Prisma.FieldRef<"ResumeHeader", 'String'>

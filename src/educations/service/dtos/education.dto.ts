@@ -7,8 +7,20 @@ export class CreateEducationDto {
     @ApiProperty({ example: 'Bacharelado' })
     degree!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `degree`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    degreeEn?: string | null;
+
     @ApiProperty({ example: 'Ciência da Computação' })
     fieldOfStudy!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `fieldOfStudy`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    fieldOfStudyEn?: string | null;
 
     @ApiProperty({ example: '2018-03-01T00:00:00.000Z' })
     startDate!: string | Date;
@@ -27,8 +39,20 @@ export class UpdateEducationDto {
     @ApiPropertyOptional({ example: 'Mestrado' })
     degree?: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `degree`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    degreeEn?: string | null;
+
     @ApiPropertyOptional({ example: 'Engenharia de Software' })
     fieldOfStudy?: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `fieldOfStudy`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    fieldOfStudyEn?: string | null;
 
     @ApiPropertyOptional({ example: '2018-03-01T00:00:00.000Z' })
     startDate?: string | Date;
@@ -50,8 +74,20 @@ export class EducationResponseDto {
     @ApiProperty({ example: 'Bacharelado' })
     degree!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `degree`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    degreeEn!: string | null;
+
     @ApiProperty({ example: 'Ciência da Computação' })
     fieldOfStudy!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `fieldOfStudy`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    fieldOfStudyEn!: string | null;
 
     @ApiProperty({ example: '2018-03-01T00:00:00.000Z' })
     startDate!: Date;

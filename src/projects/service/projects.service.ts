@@ -13,6 +13,7 @@ import type {
     UpdateProjectData,
 } from 'src/projects/service/dtos/project.ports';
 import { ProjectRepository } from 'src/projects/infra/repositories/project.repository';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class ProjectsService {
@@ -38,7 +39,9 @@ export class ProjectsService {
 
         const data: PersistProjectData = {
             title: dto.title,
+            titleEn: trimEn(dto.titleEn),
             description: dto.description,
+            descriptionEn: trimEn(dto.descriptionEn),
             images: dto.images ?? [],
             technologies: dto.technologies ?? [],
             link: dto.link ?? null,
@@ -62,7 +65,9 @@ export class ProjectsService {
 
         const data: UpdateProjectData = {};
         if (dto.title !== undefined) data.title = dto.title;
+        data.titleEn = trimEn(dto.titleEn);
         if (dto.description !== undefined) data.description = dto.description;
+        data.descriptionEn = trimEn(dto.descriptionEn);
         if (dto.images !== undefined) data.images = dto.images;
         if (dto.technologies !== undefined) data.technologies = dto.technologies;
         if (dto.link !== undefined) data.link = dto.link;

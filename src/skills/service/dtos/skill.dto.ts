@@ -17,6 +17,12 @@ export class CreateSkillDto {
     description?: string | null;
 
     @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn?: string | null;
+
+    @ApiPropertyOptional({
         example: 'https://cdn.exemplo.com/icons/typescript.svg',
         nullable: true,
     })
@@ -32,6 +38,12 @@ export class UpdateSkillDto {
 
     @ApiPropertyOptional({ example: 'Descrição atualizada', nullable: true })
     description?: string | null;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn?: string | null;
 
     @ApiPropertyOptional({
         example: 'https://cdn.exemplo.com/icons/typescript.svg',
@@ -55,6 +67,12 @@ export class SkillResponseDto {
         nullable: true,
     })
     description!: string | null;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn!: string | null;
 
     @ApiProperty({
         example: 'https://cdn.exemplo.com/icons/typescript.svg',

@@ -3,7 +3,9 @@ import type { Education } from 'src/generated/prisma/client';
 export interface PersistEducationData {
     school: string;
     degree: string;
+    degreeEn?: string | null;
     fieldOfStudy: string;
+    fieldOfStudyEn?: string | null;
     startDate: Date;
     endDate: Date | null;
 }
@@ -11,7 +13,9 @@ export interface PersistEducationData {
 export interface UpdateEducationData {
     school?: string;
     degree?: string;
+    degreeEn?: string | null;
     fieldOfStudy?: string;
+    fieldOfStudyEn?: string | null;
     startDate?: Date;
     endDate?: Date | null;
 }

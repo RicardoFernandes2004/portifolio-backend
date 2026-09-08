@@ -8,17 +8,35 @@ export class CreatePostDto {
     })
     title!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `title`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    titleEn?: string | null;
+
     @ApiProperty({
         example: 'Resumo curto que aparece em listagens.',
         description: 'Resumo / chamada do post',
     })
     summary!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `summary`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    summaryEn?: string | null;
+
     @ApiProperty({
         example: '# Introdução\n\nNeste post vou explicar como...',
         description: 'Conteúdo completo (markdown ou HTML conforme o renderer do front)',
     })
     content!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `content`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    contentEn?: string | null;
 
     @ApiProperty({
         example: 1,
@@ -52,11 +70,29 @@ export class UpdatePostDto {
     @ApiPropertyOptional({ example: 'Novo título do post' })
     title?: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `title`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    titleEn?: string | null;
+
     @ApiPropertyOptional({ example: 'Novo resumo' })
     summary?: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `summary`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    summaryEn?: string | null;
+
     @ApiPropertyOptional({ example: '# Conteúdo atualizado' })
     content?: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `content`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    contentEn?: string | null;
 
     @ApiPropertyOptional({ example: 2 })
     categoryId?: number;
@@ -87,11 +123,29 @@ export class PostResponseDto {
     @ApiProperty({ example: 'Como configurei JWT stateful no NestJS' })
     title!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `title`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    titleEn!: string | null;
+
     @ApiProperty({ example: 'Resumo curto que aparece em listagens.' })
     summary!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `summary`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    summaryEn!: string | null;
+
     @ApiProperty({ example: '# Introdução\n\nNeste post...' })
     content!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `content`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    contentEn!: string | null;
 
     @ApiProperty({
         example: ['https://cdn.exemplo.com/post-1/cover.png'],

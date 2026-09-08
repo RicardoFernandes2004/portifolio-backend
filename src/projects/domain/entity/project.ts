@@ -16,8 +16,16 @@ export class Project {
         return this.props.title;
     }
 
+    get titleEn(): string | null {
+        return this.props.titleEn;
+    }
+
     get description(): string {
         return this.props.description;
+    }
+
+    get descriptionEn(): string | null {
+        return this.props.descriptionEn;
     }
 
     get images(): string[] {
@@ -68,7 +76,9 @@ export class Project {
         return {
             id: this.id,
             title: this.title,
+            titleEn: this.titleEn,
             description: this.description,
+            descriptionEn: this.descriptionEn,
             images: this.images,
             technologies: this.technologies,
             link: this.link,

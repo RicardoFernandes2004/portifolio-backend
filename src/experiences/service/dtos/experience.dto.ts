@@ -7,11 +7,23 @@ export class CreateExperienceDto {
     @ApiProperty({ example: 'Senior Backend Engineer' })
     position!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `position`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    positionEn?: string | null;
+
     @ApiProperty({
         example:
             'Liderei a migração da plataforma para NestJS e Prisma, dobrando a vazão de pedidos.',
     })
     description!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn?: string | null;
 
     @ApiProperty({
         example: '2023-01-15T00:00:00.000Z',
@@ -34,8 +46,20 @@ export class UpdateExperienceDto {
     @ApiPropertyOptional({ example: 'Tech Lead' })
     position?: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `position`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    positionEn?: string | null;
+
     @ApiPropertyOptional({ example: 'Descrição atualizada...' })
     description?: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn?: string | null;
 
     @ApiPropertyOptional({ example: '2023-01-15T00:00:00.000Z' })
     startDate?: string | Date;
@@ -57,8 +81,20 @@ export class ExperienceResponseDto {
     @ApiProperty({ example: 'Senior Backend Engineer' })
     position!: string;
 
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `position`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    positionEn!: string | null;
+
     @ApiProperty({ example: 'Liderei a migração para NestJS e Prisma...' })
     description!: string;
+
+    @ApiPropertyOptional({
+        description: 'Traducao EN de `description`. null/ausente = front cai no portugues.',
+        nullable: true,
+    })
+    descriptionEn!: string | null;
 
     @ApiProperty({ example: '2023-01-15T00:00:00.000Z' })
     startDate!: Date;

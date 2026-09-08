@@ -20,8 +20,16 @@ export class Education {
         return this.props.degree;
     }
 
+    get degreeEn(): string | null {
+        return this.props.degreeEn;
+    }
+
     get fieldOfStudy(): string {
         return this.props.fieldOfStudy;
+    }
+
+    get fieldOfStudyEn(): string | null {
+        return this.props.fieldOfStudyEn;
     }
 
     get startDate(): Date {
@@ -45,7 +53,9 @@ export class Education {
             id: this.id,
             school: this.school,
             degree: this.degree,
+            degreeEn: this.degreeEn,
             fieldOfStudy: this.fieldOfStudy,
+            fieldOfStudyEn: this.fieldOfStudyEn,
             startDate: this.startDate,
             endDate: this.endDate,
             createdAt: this.createdAt,

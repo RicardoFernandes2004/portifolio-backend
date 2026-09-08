@@ -20,8 +20,16 @@ export class Experience {
         return this.props.position;
     }
 
+    get positionEn(): string | null {
+        return this.props.positionEn;
+    }
+
     get description(): string {
         return this.props.description;
+    }
+
+    get descriptionEn(): string | null {
+        return this.props.descriptionEn;
     }
 
     get startDate(): Date {
@@ -45,7 +53,9 @@ export class Experience {
             id: this.id,
             company: this.company,
             position: this.position,
+            positionEn: this.positionEn,
             description: this.description,
+            descriptionEn: this.descriptionEn,
             startDate: this.startDate,
             endDate: this.endDate,
             createdAt: this.createdAt,

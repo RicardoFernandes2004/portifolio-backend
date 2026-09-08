@@ -24,6 +24,10 @@ export class Skill {
         return this.props.description;
     }
 
+    get descriptionEn(): string | null {
+        return this.props.descriptionEn;
+    }
+
     get icon(): string | null {
         return this.props.icon;
     }
@@ -42,6 +46,7 @@ export class Skill {
             name: this.name,
             level: this.level,
             description: this.description,
+            descriptionEn: this.descriptionEn,
             icon: this.icon,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,

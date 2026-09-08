@@ -102,11 +102,14 @@ export const PostScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   title: 'title',
+  titleEn: 'titleEn',
   content: 'content',
+  contentEn: 'contentEn',
   images: 'images',
   categoryId: 'categoryId',
   publishedAt: 'publishedAt',
   summary: 'summary',
+  summaryEn: 'summaryEn',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -152,6 +155,7 @@ export type PostViewScalarFieldEnum = (typeof PostViewScalarFieldEnum)[keyof typ
 export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  nameEn: 'nameEn',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -163,7 +167,9 @@ export const ResumeHeaderScalarFieldEnum = {
   id: 'id',
   name: 'name',
   jobTitle: 'jobTitle',
+  jobTitleEn: 'jobTitleEn',
   summary: 'summary',
+  summaryEn: 'summaryEn',
   location: 'location',
   email: 'email',
   phone: 'phone',
@@ -180,7 +186,9 @@ export type ResumeHeaderScalarFieldEnum = (typeof ResumeHeaderScalarFieldEnum)[k
 export const ProjectScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  titleEn: 'titleEn',
   description: 'description',
+  descriptionEn: 'descriptionEn',
   images: 'images',
   technologies: 'technologies',
   link: 'link',
@@ -202,6 +210,7 @@ export const SkillScalarFieldEnum = {
   name: 'name',
   level: 'level',
   description: 'description',
+  descriptionEn: 'descriptionEn',
   icon: 'icon',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -214,7 +223,9 @@ export const ExperienceScalarFieldEnum = {
   id: 'id',
   company: 'company',
   position: 'position',
+  positionEn: 'positionEn',
   description: 'description',
+  descriptionEn: 'descriptionEn',
   startDate: 'startDate',
   endDate: 'endDate',
   createdAt: 'createdAt',
@@ -228,7 +239,9 @@ export const EducationScalarFieldEnum = {
   id: 'id',
   school: 'school',
   degree: 'degree',
+  degreeEn: 'degreeEn',
   fieldOfStudy: 'fieldOfStudy',
+  fieldOfStudyEn: 'fieldOfStudyEn',
   startDate: 'startDate',
   endDate: 'endDate',
   createdAt: 'createdAt',
@@ -253,6 +266,7 @@ export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeo
 export const LanguageScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  nameEn: 'nameEn',
   level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

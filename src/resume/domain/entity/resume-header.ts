@@ -20,8 +20,16 @@ export class ResumeHeader {
         return this.props.jobTitle;
     }
 
+    get jobTitleEn(): string | null {
+        return this.props.jobTitleEn;
+    }
+
     get summary(): string {
         return this.props.summary;
+    }
+
+    get summaryEn(): string | null {
+        return this.props.summaryEn;
     }
 
     get location(): string {
@@ -61,7 +69,9 @@ export class ResumeHeader {
             id: this.id,
             name: this.name,
             jobTitle: this.jobTitle,
+            jobTitleEn: this.jobTitleEn,
             summary: this.summary,
+            summaryEn: this.summaryEn,
             location: this.location,
             email: this.email,
             phone: this.phone,

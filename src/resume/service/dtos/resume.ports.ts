@@ -4,7 +4,9 @@ import type { ResumeAggregate } from 'src/resume/domain/entity/resume';
 export interface PersistResumeHeader {
     name: string;
     jobTitle: string;
+    jobTitleEn?: string | null;
     summary: string;
+    summaryEn?: string | null;
     location: string;
     email: string;
     phone: string;
@@ -16,7 +18,9 @@ export interface PersistResumeHeader {
 export interface UpdateResumeHeaderData {
     name?: string;
     jobTitle?: string;
+    jobTitleEn?: string | null;
     summary?: string;
+    summaryEn?: string | null;
     location?: string;
     email?: string;
     phone?: string;

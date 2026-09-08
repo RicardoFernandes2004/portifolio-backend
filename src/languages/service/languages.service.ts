@@ -13,6 +13,7 @@ import type {
     UpdateLanguageData,
 } from 'src/languages/service/dtos/language.ports';
 import { LanguageRepository } from 'src/languages/infra/repositories/language.repository';
+import { trimEn } from 'src/common/en-field';
 
 @Injectable()
 export class LanguagesService {
@@ -39,6 +40,7 @@ export class LanguagesService {
 
         const data: PersistLanguageData = {
             name: dto.name,
+            nameEn: trimEn(dto.nameEn),
             level: dto.level,
         };
 
@@ -54,6 +56,7 @@ export class LanguagesService {
 
         const data: UpdateLanguageData = {};
         if (dto.name !== undefined) data.name = dto.name;
+        data.nameEn = trimEn(dto.nameEn);
         if (dto.level !== undefined) {
             this.assertLevel(dto.level);
             data.level = dto.level;

@@ -16,6 +16,10 @@ export class Language {
         return this.props.name;
     }
 
+    get nameEn(): string | null {
+        return this.props.nameEn;
+    }
+
     get level(): number {
         return this.props.level;
     }
@@ -32,6 +36,7 @@ export class Language {
         return {
             id: this.id,
             name: this.name,
+            nameEn: this.nameEn,
             level: this.level,
             createdAt: this.createdAt,
             updatedAt: this.updatedAt,
