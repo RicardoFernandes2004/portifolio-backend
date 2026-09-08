@@ -43,6 +43,10 @@ export type UserMinAggregateOutputType = {
   jwtTokenExpiresAt: Date | null
   jwtTokenCreatedAt: Date | null
   jwtTokenUpdatedAt: Date | null
+  twoFactorSecret: string | null
+  twoFactorEnabledAt: Date | null
+  passwordResetTokenHash: string | null
+  passwordResetExpiresAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +60,10 @@ export type UserMaxAggregateOutputType = {
   jwtTokenExpiresAt: Date | null
   jwtTokenCreatedAt: Date | null
   jwtTokenUpdatedAt: Date | null
+  twoFactorSecret: string | null
+  twoFactorEnabledAt: Date | null
+  passwordResetTokenHash: string | null
+  passwordResetExpiresAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -69,6 +77,11 @@ export type UserCountAggregateOutputType = {
   jwtTokenExpiresAt: number
   jwtTokenCreatedAt: number
   jwtTokenUpdatedAt: number
+  twoFactorSecret: number
+  twoFactorEnabledAt: number
+  twoFactorBackupCodes: number
+  passwordResetTokenHash: number
+  passwordResetExpiresAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,6 +105,10 @@ export type UserMinAggregateInputType = {
   jwtTokenExpiresAt?: true
   jwtTokenCreatedAt?: true
   jwtTokenUpdatedAt?: true
+  twoFactorSecret?: true
+  twoFactorEnabledAt?: true
+  passwordResetTokenHash?: true
+  passwordResetExpiresAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +122,10 @@ export type UserMaxAggregateInputType = {
   jwtTokenExpiresAt?: true
   jwtTokenCreatedAt?: true
   jwtTokenUpdatedAt?: true
+  twoFactorSecret?: true
+  twoFactorEnabledAt?: true
+  passwordResetTokenHash?: true
+  passwordResetExpiresAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +139,11 @@ export type UserCountAggregateInputType = {
   jwtTokenExpiresAt?: true
   jwtTokenCreatedAt?: true
   jwtTokenUpdatedAt?: true
+  twoFactorSecret?: true
+  twoFactorEnabledAt?: true
+  twoFactorBackupCodes?: true
+  passwordResetTokenHash?: true
+  passwordResetExpiresAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -218,6 +244,11 @@ export type UserGroupByOutputType = {
   jwtTokenExpiresAt: Date
   jwtTokenCreatedAt: Date
   jwtTokenUpdatedAt: Date
+  twoFactorSecret: string | null
+  twoFactorEnabledAt: Date | null
+  twoFactorBackupCodes: string[]
+  passwordResetTokenHash: string | null
+  passwordResetExpiresAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -254,6 +285,11 @@ export type UserWhereInput = {
   jwtTokenExpiresAt?: Prisma.DateTimeFilter<"User"> | Date | string
   jwtTokenCreatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   jwtTokenUpdatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
+  twoFactorEnabledAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  twoFactorBackupCodes?: Prisma.StringNullableListFilter<"User">
+  passwordResetTokenHash?: Prisma.StringNullableFilter<"User"> | string | null
+  passwordResetExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
@@ -267,6 +303,11 @@ export type UserOrderByWithRelationInput = {
   jwtTokenExpiresAt?: Prisma.SortOrder
   jwtTokenCreatedAt?: Prisma.SortOrder
   jwtTokenUpdatedAt?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorEnabledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorBackupCodes?: Prisma.SortOrder
+  passwordResetTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordResetExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -283,6 +324,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   jwtTokenExpiresAt?: Prisma.DateTimeFilter<"User"> | Date | string
   jwtTokenCreatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   jwtTokenUpdatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
+  twoFactorEnabledAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  twoFactorBackupCodes?: Prisma.StringNullableListFilter<"User">
+  passwordResetTokenHash?: Prisma.StringNullableFilter<"User"> | string | null
+  passwordResetExpiresAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }, "id" | "username" | "email" | "jwtToken">
@@ -296,6 +342,11 @@ export type UserOrderByWithAggregationInput = {
   jwtTokenExpiresAt?: Prisma.SortOrder
   jwtTokenCreatedAt?: Prisma.SortOrder
   jwtTokenUpdatedAt?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorEnabledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  twoFactorBackupCodes?: Prisma.SortOrder
+  passwordResetTokenHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordResetExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -317,6 +368,11 @@ export type UserScalarWhereWithAggregatesInput = {
   jwtTokenExpiresAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   jwtTokenCreatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   jwtTokenUpdatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  twoFactorSecret?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  twoFactorEnabledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  twoFactorBackupCodes?: Prisma.StringNullableListFilter<"User">
+  passwordResetTokenHash?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  passwordResetExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -329,6 +385,11 @@ export type UserCreateInput = {
   jwtTokenExpiresAt: Date | string
   jwtTokenCreatedAt?: Date | string
   jwtTokenUpdatedAt?: Date | string
+  twoFactorSecret?: string | null
+  twoFactorEnabledAt?: Date | string | null
+  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  passwordResetTokenHash?: string | null
+  passwordResetExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -342,6 +403,11 @@ export type UserUncheckedCreateInput = {
   jwtTokenExpiresAt: Date | string
   jwtTokenCreatedAt?: Date | string
   jwtTokenUpdatedAt?: Date | string
+  twoFactorSecret?: string | null
+  twoFactorEnabledAt?: Date | string | null
+  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  passwordResetTokenHash?: string | null
+  passwordResetExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -354,6 +420,11 @@ export type UserUpdateInput = {
   jwtTokenExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  passwordResetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -367,6 +438,11 @@ export type UserUncheckedUpdateInput = {
   jwtTokenExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  passwordResetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -380,6 +456,11 @@ export type UserCreateManyInput = {
   jwtTokenExpiresAt: Date | string
   jwtTokenCreatedAt?: Date | string
   jwtTokenUpdatedAt?: Date | string
+  twoFactorSecret?: string | null
+  twoFactorEnabledAt?: Date | string | null
+  twoFactorBackupCodes?: Prisma.UserCreatetwoFactorBackupCodesInput | string[]
+  passwordResetTokenHash?: string | null
+  passwordResetExpiresAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -392,6 +473,11 @@ export type UserUpdateManyMutationInput = {
   jwtTokenExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  passwordResetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -405,8 +491,21 @@ export type UserUncheckedUpdateManyInput = {
   jwtTokenExpiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenCreatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jwtTokenUpdatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twoFactorEnabledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  twoFactorBackupCodes?: Prisma.UserUpdatetwoFactorBackupCodesInput | string[]
+  passwordResetTokenHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -418,6 +517,11 @@ export type UserCountOrderByAggregateInput = {
   jwtTokenExpiresAt?: Prisma.SortOrder
   jwtTokenCreatedAt?: Prisma.SortOrder
   jwtTokenUpdatedAt?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrder
+  twoFactorEnabledAt?: Prisma.SortOrder
+  twoFactorBackupCodes?: Prisma.SortOrder
+  passwordResetTokenHash?: Prisma.SortOrder
+  passwordResetExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -435,6 +539,10 @@ export type UserMaxOrderByAggregateInput = {
   jwtTokenExpiresAt?: Prisma.SortOrder
   jwtTokenCreatedAt?: Prisma.SortOrder
   jwtTokenUpdatedAt?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrder
+  twoFactorEnabledAt?: Prisma.SortOrder
+  passwordResetTokenHash?: Prisma.SortOrder
+  passwordResetExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -448,6 +556,10 @@ export type UserMinOrderByAggregateInput = {
   jwtTokenExpiresAt?: Prisma.SortOrder
   jwtTokenCreatedAt?: Prisma.SortOrder
   jwtTokenUpdatedAt?: Prisma.SortOrder
+  twoFactorSecret?: Prisma.SortOrder
+  twoFactorEnabledAt?: Prisma.SortOrder
+  passwordResetTokenHash?: Prisma.SortOrder
+  passwordResetExpiresAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -456,12 +568,29 @@ export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type UserCreatetwoFactorBackupCodesInput = {
+  set: string[]
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type UserUpdatetwoFactorBackupCodesInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -483,6 +612,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   jwtTokenExpiresAt?: boolean
   jwtTokenCreatedAt?: boolean
   jwtTokenUpdatedAt?: boolean
+  twoFactorSecret?: boolean
+  twoFactorEnabledAt?: boolean
+  twoFactorBackupCodes?: boolean
+  passwordResetTokenHash?: boolean
+  passwordResetExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -496,6 +630,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   jwtTokenExpiresAt?: boolean
   jwtTokenCreatedAt?: boolean
   jwtTokenUpdatedAt?: boolean
+  twoFactorSecret?: boolean
+  twoFactorEnabledAt?: boolean
+  twoFactorBackupCodes?: boolean
+  passwordResetTokenHash?: boolean
+  passwordResetExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -509,6 +648,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   jwtTokenExpiresAt?: boolean
   jwtTokenCreatedAt?: boolean
   jwtTokenUpdatedAt?: boolean
+  twoFactorSecret?: boolean
+  twoFactorEnabledAt?: boolean
+  twoFactorBackupCodes?: boolean
+  passwordResetTokenHash?: boolean
+  passwordResetExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -522,11 +666,16 @@ export type UserSelectScalar = {
   jwtTokenExpiresAt?: boolean
   jwtTokenCreatedAt?: boolean
   jwtTokenUpdatedAt?: boolean
+  twoFactorSecret?: boolean
+  twoFactorEnabledAt?: boolean
+  twoFactorBackupCodes?: boolean
+  passwordResetTokenHash?: boolean
+  passwordResetExpiresAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "password" | "jwtToken" | "jwtTokenExpiresAt" | "jwtTokenCreatedAt" | "jwtTokenUpdatedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "password" | "jwtToken" | "jwtTokenExpiresAt" | "jwtTokenCreatedAt" | "jwtTokenUpdatedAt" | "twoFactorSecret" | "twoFactorEnabledAt" | "twoFactorBackupCodes" | "passwordResetTokenHash" | "passwordResetExpiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -540,6 +689,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     jwtTokenExpiresAt: Date
     jwtTokenCreatedAt: Date
     jwtTokenUpdatedAt: Date
+    twoFactorSecret: string | null
+    twoFactorEnabledAt: Date | null
+    twoFactorBackupCodes: string[]
+    passwordResetTokenHash: string | null
+    passwordResetExpiresAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -973,6 +1127,11 @@ export interface UserFieldRefs {
   readonly jwtTokenExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly jwtTokenCreatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly jwtTokenUpdatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly twoFactorSecret: Prisma.FieldRef<"User", 'String'>
+  readonly twoFactorEnabledAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly twoFactorBackupCodes: Prisma.FieldRef<"User", 'String[]'>
+  readonly passwordResetTokenHash: Prisma.FieldRef<"User", 'String'>
+  readonly passwordResetExpiresAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }

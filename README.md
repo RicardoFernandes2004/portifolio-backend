@@ -119,6 +119,10 @@ A API sobe em `http://localhost:${PORT}` (padrão `3001`).
 | `ADMIN_EMAIL` | Para o seed | Email do admin. |
 | `ADMIN_PASSWORD` | Para o seed | Senha em texto puro (é hasheada com bcrypt no seed). |
 | `COMMENT_IP_SALT` | Recomendada | Salt para o hash de IP usado na dedup de likes/views. Defina um valor próprio em produção. |
+| `APP_URL` | Para o reset | Base pública do frontend; monta o link `$APP_URL/reset-password/<token>` enviado por email. |
+| `SMTP_HOST` `SMTP_USER` `SMTP_PASS` | Para o reset | Credenciais SMTP. Sem elas o link de reset só aparece no log (e apenas fora de produção). |
+| `SMTP_PORT` | Não | Porta SMTP (padrão `587`; `465` usa TLS implícito). |
+| `MAIL_FROM` | Não | Remetente dos emails (padrão: `SMTP_USER`). |
 | `COMMENT_BLACKLIST` | Não | Lista de palavras (CSV) que jogam o comentário para moderação (`PENDING`). Há uma lista padrão embutida. |
 
 As variáveis `POSTGRES_*` no `.env.example` são usadas apenas pelo `docker-compose` para subir o banco local.
@@ -138,6 +142,8 @@ As variáveis `POSTGRES_*` no `.env.example` são usadas apenas pelo `docker-com
 | `npm run test` | Testes unitários (Jest) |
 | `npm run test:e2e` | Testes e2e |
 | `npm run test:cov` | Cobertura de testes |
+| `npm run seed:resume` | Carrega o currículo (header, experiências, formação, projetos, skills, idiomas) a partir de `scripts/seed-resume.ts` |
+| `npm run check:security` | Checa as invariantes de 2FA e reset de senha (sem banco e sem rede) |
 
 ## Autenticação
 
@@ -149,13 +155,37 @@ A área admin usa JWT _stateful_:
 
 No Swagger, clique em **Authorize** e cole o token para testar as rotas protegidas.
 
+### Segundo fator (TOTP)
+
+Com o 2FA ativo, `POST /auth/login` não devolve sessão: devolve um _challenge_ de
+curta duração, que só vira token em `POST /auth/login/2fa` junto do código do
+app autenticador (ou de um código de backup, de uso único).
+
+| Rota | Descrição |
+| --- | --- |
+| `POST /auth/2fa/setup` | Gera o segredo e a URI `otpauth://` para o QR Code. Ainda não ativa nada. |
+| `POST /auth/2fa/enable` | Confirma o segredo com um código válido e devolve os códigos de backup. |
+| `POST /auth/2fa/disable` | Desativa; exige a senha atual. |
+| `POST /auth/2fa/backup-codes` | Gera um novo lote e invalida o anterior. |
+
+### Reset de senha
+
+`POST /auth/password/forgot` responde `204` sempre — inclusive para email
+inexistente, senão vira oráculo de enumeração. O token vale 30 minutos, é de uso
+único e só o hash fica no banco. `POST /auth/password/reset` conclui o fluxo e,
+com 2FA ativo, também exige o código: uma caixa de email comprometida sozinha não
+toma o painel.
+
+Se tudo falhar, `node dist/src/scripts/admin-recover.js --set-password <senha>`
+(ou `--disable-2fa`) recupera o acesso por SSH na máquina de produção.
+
 ## Visão geral da API
 
 Todas as rotas estão documentadas em `/docs`. Resumo dos recursos:
 
 | Prefixo | Público | Admin (JWT) |
 | --- | --- | --- |
-| `/auth` | `POST /login` | — |
+| `/auth` | `POST /login`, `POST /login/2fa`, `POST /password/forgot`, `POST /password/reset` | `GET /me`, setup/enable/disable do 2FA, códigos de backup |
 | `/posts` | listar publicados, detalhar por id/slug | criar, editar, publicar/despublicar, deletar |
 | `/posts/:id/comments` | criar e listar comentários | — |
 | `/posts/comments/...` | — | listar pendentes, aprovar, deletar |

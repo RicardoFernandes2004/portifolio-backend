@@ -49,6 +49,12 @@ export class UserResponseDto {
     @ApiProperty({ example: 'admin@portifolio.dev' })
     email!: string;
 
+    @ApiProperty({
+        example: false,
+        description: 'Se o segundo fator está ativo. O segredo nunca é exposto.',
+    })
+    twoFactorEnabled!: boolean;
+
     @ApiProperty({ example: '2026-04-26T18:00:00.000Z' })
     createdAt!: Date;
 
