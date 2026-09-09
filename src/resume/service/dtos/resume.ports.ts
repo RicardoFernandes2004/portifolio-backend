@@ -35,6 +35,9 @@ export interface ResumeHeaderRepositoryPort {
     update(id: number, data: UpdateResumeHeaderData): Promise<PrismaResumeHeader>;
 }
 
+/** Idioma do PDF. Campos *En caem para o PT quando nao traduzidos. */
+export type ResumeLocale = 'pt' | 'en';
+
 export interface ResumePdfPort {
-    build(resume: ResumeAggregate): Promise<Buffer>;
+    build(resume: ResumeAggregate, locale: ResumeLocale): Promise<Buffer>;
 }

@@ -3,6 +3,7 @@ import {
     Controller,
     Get,
     Put,
+    Query,
     Res,
     UseGuards,
 } from '@nestjs/common';
@@ -13,6 +14,7 @@ import {
     ApiOkResponse,
     ApiOperation,
     ApiProduces,
+    ApiQuery,
     ApiTags,
     ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -22,6 +24,7 @@ import {
     ResumeHeaderResponseDto,
     UpdateResumeHeaderDto,
 } from 'src/resume/service/dtos/resume-header.dto';
+import type { ResumeLocale } from 'src/resume/service/dtos/resume.ports';
 import { ResumeHeaderService } from 'src/resume/service/resume-header.service';
 import { ResumeService } from 'src/resume/service/resume.service';
 
@@ -71,15 +74,27 @@ export class ResumeController {
             'Monta o PDF com header + experiências + formações + skills + idiomas + projetos atuais do banco. Sem cache.',
     })
     @ApiProduces('application/pdf')
+    @ApiQuery({
+        name: 'lang',
+        required: false,
+        enum: ['pt', 'en'],
+        description:
+            'Idioma do PDF. Qualquer valor diferente de "en" gera a versão em português.',
+    })
     @ApiOkResponse({
         description: 'PDF binário (download)',
         schema: { type: 'string', format: 'binary' },
     })
-    async download(@Res() res: Response): Promise<void> {
-        const buffer = await this.resumeService.getPdf();
+    async download(
+        @Res() res: Response,
+        @Query('lang') lang?: string,
+    ): Promise<void> {
+        const locale: ResumeLocale = lang === 'en' ? 'en' : 'pt';
+        const buffer = await this.resumeService.getPdf(locale);
+        const filename = locale === 'en' ? 'resume.pdf' : 'curriculum.pdf';
         res.set({
             'Content-Type': 'application/pdf',
-            'Content-Disposition': 'attachment; filename="curriculum.pdf"',
+            'Content-Disposition': `attachment; filename="${filename}"`,
             'Content-Length': buffer.length.toString(),
         });
         res.send(buffer);

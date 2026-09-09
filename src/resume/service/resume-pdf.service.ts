@@ -2,22 +2,46 @@ import { Injectable } from '@nestjs/common';
 import type { Content, TDocumentDefinitions } from 'pdfmake/interfaces';
 import type { Education } from 'src/educations/domain/entity/education';
 import type { Experience } from 'src/experiences/domain/entity/experience';
-import type { Language } from 'src/languages/domain/entity/language';
 import type { Project } from 'src/projects/domain/entity/project';
 import type { ResumeAggregate } from 'src/resume/domain/entity/resume';
 import type { ResumeHeader } from 'src/resume/domain/entity/resume-header';
-import type { ResumePdfPort } from 'src/resume/service/dtos/resume.ports';
-import type { Skill } from 'src/skills/domain/entity/skill';
+import type {
+    ResumeLocale,
+    ResumePdfPort,
+} from 'src/resume/service/dtos/resume.ports';
 
 import * as helveticaFont from 'pdfmake/standard-fonts/Helvetica';
 
 import pdfMake = require('pdfmake');
 
+const LABELS = {
+    pt: {
+        summary: 'Resumo',
+        experience: 'Experiência',
+        education: 'Formação',
+        projects: 'Projetos',
+        skills: 'Habilidades',
+        languages: 'Idiomas',
+        present: 'Atual',
+        degreeIn: 'em',
+    },
+    en: {
+        summary: 'Summary',
+        experience: 'Experience',
+        education: 'Education',
+        projects: 'Projects',
+        skills: 'Skills',
+        languages: 'Languages',
+        present: 'Present',
+        degreeIn: 'in',
+    },
+} as const;
+
 @Injectable()
 export class ResumePdfService implements ResumePdfPort {
     private fontsRegistered = false;
 
-    async build(resume: ResumeAggregate): Promise<Buffer> {
+    async build(resume: ResumeAggregate, locale: ResumeLocale): Promise<Buffer> {
         this.ensureFonts();
 
         const docDefinition: TDocumentDefinitions = {
@@ -37,7 +61,7 @@ export class ResumePdfService implements ResumePdfPort {
                 entryPeriod: { color: '#666666', fontSize: 9 },
                 contactLine: { fontSize: 9, color: '#444444' },
             },
-            content: this.buildContent(resume),
+            content: this.buildContent(resume, locale),
         };
 
         const doc = pdfMake.createPdf(docDefinition);
@@ -53,45 +77,80 @@ export class ResumePdfService implements ResumePdfPort {
         this.fontsRegistered = true;
     }
 
-    private buildContent(resume: ResumeAggregate): Content[] {
+    /** Traducao com fallback: campo *En vazio cai para o PT. */
+    private tr(locale: ResumeLocale, pt: string, en: string | null): string {
+        return locale === 'en' && en ? en : pt;
+    }
+
+    private buildContent(
+        resume: ResumeAggregate,
+        locale: ResumeLocale,
+    ): Content[] {
+        const t = LABELS[locale];
         const content: Content[] = [];
 
-        content.push(...this.buildHeaderSection(resume.header));
+        content.push(...this.buildHeaderSection(resume.header, locale));
 
         if (resume.header.summary) {
-            content.push({ text: 'Summary', style: 'sectionTitle' });
-            content.push({ text: resume.header.summary });
+            content.push({ text: t.summary, style: 'sectionTitle' });
+            content.push({
+                text: this.tr(
+                    locale,
+                    resume.header.summary,
+                    resume.header.summaryEn,
+                ),
+            });
         }
 
         if (resume.experiences.length > 0) {
-            content.push({ text: 'Experience', style: 'sectionTitle' });
-            content.push(...resume.experiences.map((e) => this.renderExperience(e)));
+            content.push({ text: t.experience, style: 'sectionTitle' });
+            content.push(
+                ...resume.experiences.map((e) => this.renderExperience(e, locale)),
+            );
         }
 
         if (resume.educations.length > 0) {
-            content.push({ text: 'Education', style: 'sectionTitle' });
-            content.push(...resume.educations.map((e) => this.renderEducation(e)));
+            content.push({ text: t.education, style: 'sectionTitle' });
+            content.push(
+                ...resume.educations.map((e) => this.renderEducation(e, locale)),
+            );
         }
 
         if (resume.projects.length > 0) {
-            content.push({ text: 'Projects', style: 'sectionTitle' });
-            content.push(...resume.projects.map((p) => this.renderProject(p)));
+            content.push({ text: t.projects, style: 'sectionTitle' });
+            content.push(
+                ...resume.projects.map((p) => this.renderProject(p, locale)),
+            );
         }
 
         if (resume.skills.length > 0) {
-            content.push({ text: 'Skills', style: 'sectionTitle' });
-            content.push(this.renderLeveledList(resume.skills));
+            content.push({ text: t.skills, style: 'sectionTitle' });
+            content.push(
+                this.renderLeveledList(
+                    resume.skills.map((s) => ({ label: s.name, level: s.level })),
+                ),
+            );
         }
 
         if (resume.languages.length > 0) {
-            content.push({ text: 'Languages', style: 'sectionTitle' });
-            content.push(this.renderLeveledList(resume.languages));
+            content.push({ text: t.languages, style: 'sectionTitle' });
+            content.push(
+                this.renderLeveledList(
+                    resume.languages.map((l) => ({
+                        label: this.tr(locale, l.name, l.nameEn),
+                        level: l.level,
+                    })),
+                ),
+            );
         }
 
         return content;
     }
 
-    private buildHeaderSection(header: ResumeHeader): Content[] {
+    private buildHeaderSection(
+        header: ResumeHeader,
+        locale: ResumeLocale,
+    ): Content[] {
         const contactItems: string[] = [];
         if (header.email) contactItems.push(header.email);
         if (header.phone) contactItems.push(header.phone);
@@ -102,7 +161,11 @@ export class ResumePdfService implements ResumePdfPort {
 
         const items: Content[] = [
             { text: header.name, style: 'name' },
-            { text: header.jobTitle, style: 'jobTitle', margin: [0, 0, 0, 6] },
+            {
+                text: this.tr(locale, header.jobTitle, header.jobTitleEn),
+                style: 'jobTitle',
+                margin: [0, 0, 0, 6],
+            },
         ];
 
         if (contactItems.length > 0) {
@@ -112,32 +175,66 @@ export class ResumePdfService implements ResumePdfPort {
         return items;
     }
 
-    private renderExperience(experience: Experience): Content {
-        const period = this.formatPeriod(experience.startDate, experience.endDate);
-        return {
-            margin: [0, 0, 0, 8],
-            stack: [
-                {
-                    columns: [
-                        { text: experience.position, style: 'entryTitle' },
-                        { text: period, style: 'entryPeriod', alignment: 'right' },
-                    ],
-                },
-                { text: experience.company, style: 'entrySubtitle' },
-                { text: experience.description, margin: [0, 4, 0, 0] },
-            ],
-        };
-    }
-
-    private renderEducation(education: Education): Content {
-        const period = this.formatPeriod(education.startDate, education.endDate);
+    private renderExperience(
+        experience: Experience,
+        locale: ResumeLocale,
+    ): Content {
+        const period = this.formatPeriod(
+            experience.startDate,
+            experience.endDate,
+            locale,
+        );
         return {
             margin: [0, 0, 0, 8],
             stack: [
                 {
                     columns: [
                         {
-                            text: `${education.degree} in ${education.fieldOfStudy}`,
+                            text: this.tr(
+                                locale,
+                                experience.position,
+                                experience.positionEn,
+                            ),
+                            style: 'entryTitle',
+                        },
+                        { text: period, style: 'entryPeriod', alignment: 'right' },
+                    ],
+                },
+                { text: experience.company, style: 'entrySubtitle' },
+                {
+                    text: this.tr(
+                        locale,
+                        experience.description,
+                        experience.descriptionEn,
+                    ),
+                    margin: [0, 4, 0, 0],
+                },
+            ],
+        };
+    }
+
+    private renderEducation(
+        education: Education,
+        locale: ResumeLocale,
+    ): Content {
+        const period = this.formatPeriod(
+            education.startDate,
+            education.endDate,
+            locale,
+        );
+        const degree = this.tr(locale, education.degree, education.degreeEn);
+        const field = this.tr(
+            locale,
+            education.fieldOfStudy,
+            education.fieldOfStudyEn,
+        );
+        return {
+            margin: [0, 0, 0, 8],
+            stack: [
+                {
+                    columns: [
+                        {
+                            text: `${degree} ${LABELS[locale].degreeIn} ${field}`,
                             style: 'entryTitle',
                         },
                         { text: period, style: 'entryPeriod', alignment: 'right' },
@@ -148,9 +245,12 @@ export class ResumePdfService implements ResumePdfPort {
         };
     }
 
-    private renderProject(project: Project): Content {
+    private renderProject(project: Project, locale: ResumeLocale): Content {
         const stack: Content[] = [
-            { text: project.title, style: 'entryTitle' },
+            {
+                text: this.tr(locale, project.title, project.titleEn),
+                style: 'entryTitle',
+            },
         ];
 
         if (project.technologies.length > 0) {
@@ -161,7 +261,14 @@ export class ResumePdfService implements ResumePdfPort {
         }
 
         if (project.description) {
-            stack.push({ text: project.description, margin: [0, 4, 0, 0] });
+            stack.push({
+                text: this.tr(
+                    locale,
+                    project.description,
+                    project.descriptionEn,
+                ),
+                margin: [0, 4, 0, 0],
+            });
         }
 
         const links: string[] = [];
@@ -179,12 +286,14 @@ export class ResumePdfService implements ResumePdfPort {
         return { margin: [0, 0, 0, 8], stack };
     }
 
-    private renderLeveledList(items: Array<Skill | Language>): Content {
+    private renderLeveledList(
+        items: Array<{ label: string; level: number }>,
+    ): Content {
         return {
             table: {
                 widths: ['*', 120],
                 body: items.map((item) => [
-                    { text: item.name, margin: [0, 2, 0, 2] },
+                    { text: item.label, margin: [0, 2, 0, 2] },
                     this.renderLevelBar(item.level),
                 ]),
             },
@@ -248,9 +357,15 @@ export class ResumePdfService implements ResumePdfPort {
         };
     }
 
-    private formatPeriod(start: Date, end: Date | null): string {
+    private formatPeriod(
+        start: Date,
+        end: Date | null,
+        locale: ResumeLocale,
+    ): string {
         const startLabel = this.formatMonthYear(start);
-        const endLabel = end ? this.formatMonthYear(end) : 'Present';
+        const endLabel = end
+            ? this.formatMonthYear(end)
+            : LABELS[locale].present;
         return `${startLabel} – ${endLabel}`;
     }
 
