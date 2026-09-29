@@ -1,10 +1,10 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { createHash } from 'node:crypto';
-import { UploadTicket } from '../../domain/entity/upload-ticket';
+import { UploadTicket } from 'src/uploads/domain/entity/upload-ticket';
 import type {
     CreateUploadTicketData,
     StoragePort,
-} from '../../service/dtos/upload.ports';
+} from 'src/uploads/service/dtos/upload.ports';
 
 /**
  * Assinatura do Cloudinary: params ordenados por chave, `k=v` unidos por `&`,
