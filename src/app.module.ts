@@ -9,6 +9,7 @@ import { PostsModule } from './posts/posts.module';
 import { ProjectsModule } from './projects/projects.module';
 import { ResumeModule } from './resume/resume.module';
 import { SkillsModule } from './skills/skills.module';
+import { UploadsModule } from './uploads/uploads.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -26,6 +27,7 @@ import { UsersModule } from './users/users.module';
         ResumeModule,
         CategoriesModule,
         PostsModule,
+        UploadsModule,
     ],
     controllers: [],
     providers: [],
