@@ -4,7 +4,10 @@ import { ExperiencesService } from 'src/experiences/service/experiences.service'
 import { LanguagesService } from 'src/languages/service/languages.service';
 import { ProjectsService } from 'src/projects/service/projects.service';
 import type { ResumeAggregate } from 'src/resume/domain/entity/resume';
-import type { ResumeLocale } from 'src/resume/service/dtos/resume.ports';
+import type {
+    ResumeFormat,
+    ResumeLocale,
+} from 'src/resume/service/dtos/resume.ports';
 import { ResumeHeaderService } from 'src/resume/service/resume-header.service';
 import { ResumePdfService } from 'src/resume/service/resume-pdf.service';
 import { SkillsService } from 'src/skills/service/skills.service';
@@ -35,8 +38,11 @@ export class ResumeService {
         return { header, experiences, educations, skills, languages, projects };
     }
 
-    async getPdf(locale: ResumeLocale = 'pt'): Promise<Buffer> {
+    async getPdf(
+        locale: ResumeLocale = 'pt',
+        format: ResumeFormat = 'full',
+    ): Promise<Buffer> {
         const aggregate = await this.getAggregate();
-        return this.pdfService.build(aggregate, locale);
+        return this.pdfService.build(aggregate, locale, format);
     }
 }

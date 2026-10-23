@@ -24,7 +24,10 @@ import {
     ResumeHeaderResponseDto,
     UpdateResumeHeaderDto,
 } from 'src/resume/service/dtos/resume-header.dto';
-import type { ResumeLocale } from 'src/resume/service/dtos/resume.ports';
+import type {
+    ResumeFormat,
+    ResumeLocale,
+} from 'src/resume/service/dtos/resume.ports';
 import { ResumeHeaderService } from 'src/resume/service/resume-header.service';
 import { ResumeService } from 'src/resume/service/resume.service';
 
@@ -81,6 +84,13 @@ export class ResumeController {
         description:
             'Idioma do PDF. Qualquer valor diferente de "en" gera a versão em português.',
     })
+    @ApiQuery({
+        name: 'format',
+        required: false,
+        enum: ['full', 'onepage'],
+        description:
+            '"onepage" gera o resume de uma página (projetos resumidos, skills e idiomas em linha). Padrão: CV completo.',
+    })
     @ApiOkResponse({
         description: 'PDF binário (download)',
         schema: { type: 'string', format: 'binary' },
@@ -88,10 +98,13 @@ export class ResumeController {
     async download(
         @Res() res: Response,
         @Query('lang') lang?: string,
+        @Query('format') formatParam?: string,
     ): Promise<void> {
         const locale: ResumeLocale = lang === 'en' ? 'en' : 'pt';
-        const buffer = await this.resumeService.getPdf(locale);
-        const filename = locale === 'en' ? 'resume.pdf' : 'curriculum.pdf';
+        const format: ResumeFormat = formatParam === 'onepage' ? 'onepage' : 'full';
+        const buffer = await this.resumeService.getPdf(locale, format);
+        const base = locale === 'en' ? 'resume' : 'curriculum';
+        const filename = `${base}${format === 'onepage' ? '-1page' : ''}.pdf`;
         res.set({
             'Content-Type': 'application/pdf',
             'Content-Disposition': `attachment; filename="${filename}"`,

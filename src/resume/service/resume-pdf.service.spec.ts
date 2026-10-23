@@ -98,6 +98,32 @@ describe('ResumePdfService', () => {
         expect(json).not.toContain('Resumo em portugues');
     });
 
+    it('onepage resume o projeto ao primeiro paragrafo e tira as barras de nivel', () => {
+        const comBullets = {
+            ...resume,
+            projects: [
+                {
+                    ...resume.projects[0],
+                    descriptionEn: 'Tagline.\n\n- bullet longo',
+                },
+            ],
+        } as unknown as ResumeAggregate;
+        const build = (
+            service as unknown as {
+                buildContent: (r: ResumeAggregate, l: 'en', onePage: boolean) => unknown;
+            }
+        ).buildContent.bind(service);
+
+        const onePage = JSON.stringify(build(comBullets, 'en', true));
+        const full = JSON.stringify(build(comBullets, 'en', false));
+
+        expect(onePage).toContain('Tagline.');
+        expect(onePage).not.toContain('bullet longo');
+        expect(onePage).not.toContain('/5');
+        expect(full).toContain('bullet longo');
+        expect(full).toContain('5/5');
+    });
+
     it('cai para o PT quando a traducao esta vazia', () => {
         const semTraducao = {
             ...resume,

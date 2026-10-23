@@ -38,6 +38,13 @@ export interface ResumeHeaderRepositoryPort {
 /** Idioma do PDF. Campos *En caem para o PT quando nao traduzidos. */
 export type ResumeLocale = 'pt' | 'en';
 
+/** full: CV completo; onepage: resume de uma pagina para vaga de fora. */
+export type ResumeFormat = 'full' | 'onepage';
+
 export interface ResumePdfPort {
-    build(resume: ResumeAggregate, locale: ResumeLocale): Promise<Buffer>;
+    build(
+        resume: ResumeAggregate,
+        locale: ResumeLocale,
+        format?: ResumeFormat,
+    ): Promise<Buffer>;
 }

@@ -6,6 +6,7 @@ import type { Project } from 'src/projects/domain/entity/project';
 import type { ResumeAggregate } from 'src/resume/domain/entity/resume';
 import type { ResumeHeader } from 'src/resume/domain/entity/resume-header';
 import type {
+    ResumeFormat,
     ResumeLocale,
     ResumePdfPort,
 } from 'src/resume/service/dtos/resume.ports';
@@ -41,19 +42,28 @@ const LABELS = {
 export class ResumePdfService implements ResumePdfPort {
     private fontsRegistered = false;
 
-    async build(resume: ResumeAggregate, locale: ResumeLocale): Promise<Buffer> {
+    async build(
+        resume: ResumeAggregate,
+        locale: ResumeLocale,
+        format: ResumeFormat = 'full',
+    ): Promise<Buffer> {
         this.ensureFonts();
+        const onePage = format === 'onepage';
 
         const docDefinition: TDocumentDefinitions = {
-            pageMargins: [40, 40, 40, 40],
-            defaultStyle: { font: 'Helvetica', fontSize: 10, lineHeight: 1.25 },
+            pageMargins: onePage ? [36, 30, 36, 30] : [40, 40, 40, 40],
+            defaultStyle: {
+                font: 'Helvetica',
+                fontSize: onePage ? 9 : 10,
+                lineHeight: onePage ? 1.15 : 1.25,
+            },
             styles: {
-                name: { fontSize: 22, bold: true },
-                jobTitle: { fontSize: 12, italics: true, color: '#555555' },
+                name: { fontSize: onePage ? 18 : 22, bold: true },
+                jobTitle: { fontSize: onePage ? 11 : 12, italics: true, color: '#555555' },
                 sectionTitle: {
-                    fontSize: 13,
+                    fontSize: onePage ? 11 : 13,
                     bold: true,
-                    margin: [0, 12, 0, 6],
+                    margin: onePage ? [0, 8, 0, 3] : [0, 12, 0, 6],
                     color: '#222222',
                 },
                 entryTitle: { fontSize: 11, bold: true },
@@ -61,7 +71,7 @@ export class ResumePdfService implements ResumePdfPort {
                 entryPeriod: { color: '#666666', fontSize: 9 },
                 contactLine: { fontSize: 9, color: '#444444' },
             },
-            content: this.buildContent(resume, locale),
+            content: this.buildContent(resume, locale, onePage),
         };
 
         const doc = pdfMake.createPdf(docDefinition);
@@ -82,9 +92,11 @@ export class ResumePdfService implements ResumePdfPort {
         return locale === 'en' && en ? en : pt;
     }
 
+    /** onePage: projetos so com o paragrafo de abertura, skills e idiomas em linha. */
     private buildContent(
         resume: ResumeAggregate,
         locale: ResumeLocale,
+        onePage = false,
     ): Content[] {
         const t = LABELS[locale];
         const content: Content[] = [];
@@ -105,7 +117,9 @@ export class ResumePdfService implements ResumePdfPort {
         if (resume.experiences.length > 0) {
             content.push({ text: t.experience, style: 'sectionTitle' });
             content.push(
-                ...resume.experiences.map((e) => this.renderExperience(e, locale)),
+                ...resume.experiences.map((e) =>
+                    this.renderExperience(e, locale, onePage),
+                ),
             );
         }
 
@@ -119,28 +133,36 @@ export class ResumePdfService implements ResumePdfPort {
         if (resume.projects.length > 0) {
             content.push({ text: t.projects, style: 'sectionTitle' });
             content.push(
-                ...resume.projects.map((p) => this.renderProject(p, locale)),
+                ...resume.projects.map((p) =>
+                    this.renderProject(p, locale, onePage),
+                ),
             );
         }
 
         if (resume.skills.length > 0) {
             content.push({ text: t.skills, style: 'sectionTitle' });
             content.push(
-                this.renderLeveledList(
-                    resume.skills.map((s) => ({ label: s.name, level: s.level })),
-                ),
+                onePage
+                    ? { text: resume.skills.map((s) => s.name).join('  •  ') }
+                    : this.renderLeveledList(
+                          resume.skills.map((s) => ({
+                              label: s.name,
+                              level: s.level,
+                          })),
+                      ),
             );
         }
 
         if (resume.languages.length > 0) {
             content.push({ text: t.languages, style: 'sectionTitle' });
+            const languages = resume.languages.map((l) => ({
+                label: this.tr(locale, l.name, l.nameEn),
+                level: l.level,
+            }));
             content.push(
-                this.renderLeveledList(
-                    resume.languages.map((l) => ({
-                        label: this.tr(locale, l.name, l.nameEn),
-                        level: l.level,
-                    })),
-                ),
+                onePage
+                    ? { text: languages.map((l) => l.label).join('  •  ') }
+                    : this.renderLeveledList(languages),
             );
         }
 
@@ -178,6 +200,7 @@ export class ResumePdfService implements ResumePdfPort {
     private renderExperience(
         experience: Experience,
         locale: ResumeLocale,
+        onePage = false,
     ): Content {
         const period = this.formatPeriod(
             experience.startDate,
@@ -202,12 +225,15 @@ export class ResumePdfService implements ResumePdfPort {
                 },
                 { text: experience.company, style: 'entrySubtitle' },
                 {
-                    text: this.tr(
-                        locale,
-                        experience.description,
-                        experience.descriptionEn,
+                    text: this.compact(
+                        this.tr(
+                            locale,
+                            experience.description,
+                            experience.descriptionEn,
+                        ),
+                        onePage,
                     ),
-                    margin: [0, 4, 0, 0],
+                    margin: onePage ? [0, 2, 0, 0] : [0, 4, 0, 0],
                 },
             ],
         };
@@ -245,7 +271,11 @@ export class ResumePdfService implements ResumePdfPort {
         };
     }
 
-    private renderProject(project: Project, locale: ResumeLocale): Content {
+    private renderProject(
+        project: Project,
+        locale: ResumeLocale,
+        onePage = false,
+    ): Content {
         const stack: Content[] = [
             {
                 text: this.tr(locale, project.title, project.titleEn),
@@ -253,7 +283,8 @@ export class ResumePdfService implements ResumePdfPort {
             },
         ];
 
-        if (project.technologies.length > 0) {
+        // No onepage a secao de skills ja cobre a stack.
+        if (!onePage && project.technologies.length > 0) {
             stack.push({
                 text: project.technologies.join(' • '),
                 style: 'entryPeriod',
@@ -261,13 +292,14 @@ export class ResumePdfService implements ResumePdfPort {
         }
 
         if (project.description) {
+            const description = this.tr(
+                locale,
+                project.description,
+                project.descriptionEn,
+            );
             stack.push({
-                text: this.tr(
-                    locale,
-                    project.description,
-                    project.descriptionEn,
-                ),
-                margin: [0, 4, 0, 0],
+                text: onePage ? this.tagline(description) : description,
+                margin: onePage ? [0, 1, 0, 0] : [0, 4, 0, 0],
             });
         }
 
@@ -283,7 +315,20 @@ export class ResumePdfService implements ResumePdfPort {
             });
         }
 
-        return { margin: [0, 0, 0, 8], stack };
+        return { margin: onePage ? [0, 0, 0, 5] : [0, 0, 0, 8], stack };
+    }
+
+    /** Junta paragrafos (linhas em branco viram quebra simples) para caber em uma pagina. */
+    private compact(text: string, onePage: boolean): string {
+        return onePage ? text.replace(/\n\s*\n/g, '\n') : text;
+    }
+
+    /** Paragrafo de abertura; se for longo, so a primeira frase. */
+    private tagline(text: string): string {
+        const first = text.split(/\n\s*\n/)[0];
+        if (first.length <= 220) return first;
+        const sentence = /^.+?[.!?](?=\s)/s.exec(first);
+        return sentence ? sentence[0] : first;
     }
 
     private renderLeveledList(
